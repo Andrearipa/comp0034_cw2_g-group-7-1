@@ -1,0 +1,3 @@
+graft startingbusiness_app/static
+graft startingbusiness_app/templates
+global-exclude *.pyc
