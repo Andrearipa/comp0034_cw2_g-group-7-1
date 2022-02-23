@@ -29,8 +29,9 @@ pd.options.mode.chained_assignment = None
 # Import data from the correct directory and add lists for dropdown menus
 
 # df_path = Path(__file__).parent.joinpath("DBresorted_cm.csv")
-df_path = Path('Data Set')
-df_cm_bc = pd.read_csv(str(df_path.joinpath('DBresorted_cm.csv')))
+# df_path = Path('Data Set')
+# df_cm_bc = pd.read_csv(str(df_path.joinpath('DBresorted_cm.csv')))
+df_cm_bc = pd.read_csv('./DBresorted_cm.csv')
 
 indicator_dropdown_list = ['Starting a business - Score',
                            'Starting a business: Cost - Average (% of income per capita) - Score',
