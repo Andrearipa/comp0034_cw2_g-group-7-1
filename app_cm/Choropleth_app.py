@@ -28,8 +28,9 @@ pd.options.mode.chained_assignment = None
 # ------------------------------------------------Data&Lists---------------------------------------------------------- #
 # Import data from the correct directory and add lists for dropdown menus
 
-df_path = Path(__file__).parent.joinpath("DBresorted_cm.csv")
-df_cm_bc = pd.read_csv(df_path)
+# df_path = Path(__file__).parent.joinpath("DBresorted_cm.csv")
+df_path = Path('Data Set')
+df_cm_bc = pd.read_csv(str(df_path.joinpath('DBresorted_cm.csv')))
 
 indicator_dropdown_list = ['Starting a business - Score',
                            'Starting a business: Cost - Average (% of income per capita) - Score',
@@ -98,10 +99,13 @@ cm_bc_page = dbc.Container(fluid=True, children=[
     ]),
 ])
 
+
 # -----------------------------------------------Layout--------------------------------------------------------------- #
 # Generating app layout based on container
+
+
 def init_dashboard(flask_app):
-    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/app_cm/',
+    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/dash_app/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
     dash_app.layout = cm_bc_page
     init_callbacks(dash_app)
@@ -134,7 +138,7 @@ def init_callbacks(dash_app):
         if len(income) == 0:
             income = ['All']
 
-        # -------------------------------------------Choropleth Map--------------------------------------------------------#
+        # -------------------------------------------Choropleth Map--------------------------------------------------- #
 
         # Modifying the dataframe to generate choropleth map by taking data for only the selected regions. Setting fitbound
         # value variable to locations to automatically zoom in selected regions in the map
@@ -170,7 +174,7 @@ def init_callbacks(dash_app):
                              coloraxis_colorbar=dict(title="Score"))
         fig_cm.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)', })
 
-        # ------------------------------------------Bar Chart--------------------------------------------------------------#
+        # ------------------------------------------Bar Chart--------------------------------------------------------- #
 
         # Modify the same database used for choropleth to display same data but only showing the top 10 countries in a
         # ranking order
@@ -215,10 +219,3 @@ def init_callbacks(dash_app):
         fig_bc.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)', 'paper_bgcolor': 'rgba(0, 0, 0, 0)', })
 
         return fig_cm, fig_bc
-
-
-# ----------------------------------------Isolated Execution Option--------------------------------------------------- #
-
-
-if __name__ == '__main__':
-    dash_app.run_server(debug=True)
