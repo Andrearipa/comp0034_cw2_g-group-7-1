@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
+
 db = SQLAlchemy()
 login_manager = LoginManager()
 csrf = CSRFProtect()
@@ -15,6 +16,8 @@ def create_app(config_class_name):
     :type config_class_name: Specifies the configuration class
     :rtype: Returns a configured Flask object
     """
+
+
     app = Flask(__name__)
     app.config.from_object(config_class_name)
     '''from startingbusiness_app.auth.routes import auth_bp
@@ -29,5 +32,11 @@ def create_app(config_class_name):
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard
         app = init_dashboard(app)
+
+    from startingbusiness_app.user.routes import user_bp
+    app.register_blueprint(user_bp)
+
+    from startingbusiness_app.main.routes import main_bp
+    app.register_blueprint(main_bp)
 
     return app
