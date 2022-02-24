@@ -11,8 +11,9 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = 'n_MImT106bAHxxAn2eogow'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DATA_PATH = Path('Data Set')
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(DATA_PATH.parent.joinpath('choropleth_app.sqlite'))
+    #DATA_PATH = Path('Data Set')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(Path(__file__).parent.joinpath('choropleth_app.sqlite'))
+    TESTING = False
 
 
 class ProductionConfig(Config):
