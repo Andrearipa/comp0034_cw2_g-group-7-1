@@ -1,21 +1,29 @@
+from flask_wtf.file import FileAllowed
+from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, BooleanField
-from wtforms.validators import DataRequired, EqualTo
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField
-from wtforms.validators import DataRequired, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, EmailField, BooleanField, SelectField, FileField
+from wtforms.validators import DataRequired, EqualTo, ValidationError, Length
 
 from startingbusiness_app.models import User
 
 
 class SignupForm(FlaskForm):
-    first_name = StringField(label='First name', validators=[DataRequired(message='First name required')])
-    last_name = StringField(label='Last name', validators=[DataRequired(message='Last name required')])
-    email = EmailField(label='Email address', validators=[DataRequired(message='Email address required')])
-    password = PasswordField(label='Password', validators=[DataRequired(message='Password required')])
+
+    first_name = StringField(label='First name', validators=[DataRequired(message='First name required'),
+                                                             Length(min = 4, max = 12 )])
+    last_name = StringField(label='Last name', validators=[DataRequired(message='Last name required'),
+                                                           Length(min = 4, max = 12 )])
+    email = EmailField(label='Email address', validators=[DataRequired(message='Email address required'),
+                                                          Length(min = 5, message= "Email address too short")])
+    password = PasswordField(label='Password', validators=[DataRequired(message='Password required'),
+                                                           Length(min=10, message="Password must be at least 10 characters long")])
     password_repeat = PasswordField(label='Repeat Password',
                                     validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    account_type = SelectField(label='Intended Use', choices= [('Professional', 'Professional'), ('Student', 'Student'),
+                                                               ('Entrepreneur', 'Entrepreneur')],
+                               validators=[DataRequired(message='This field is required')])
+    #profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
+
 
     def validate_email(self, email):
         users = User.query.filter_by(email=email.data).first()

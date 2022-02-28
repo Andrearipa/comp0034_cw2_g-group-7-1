@@ -10,6 +10,8 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
+    #account_type = db.Column(db.Text, nullable=False)
+    #profile_image =db.column(db.) ??? store in string?
 
     def __repr__(self):
         return f"{self.id} {self.first_name} {self.last_name} {self.email} {self.password}"
