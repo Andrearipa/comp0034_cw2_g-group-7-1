@@ -7,6 +7,7 @@ import dash_bootstrap_components as dbc
 from pathlib import Path
 from flask.helpers import get_root_path
 
+
 db = SQLAlchemy()
 #login_manager = LoginManager()
 csrf = CSRFProtect()
@@ -19,6 +20,8 @@ def create_app(config_class_name):
     :type config_class_name: Specifies the configuration class
     :rtype: Returns a configured Flask object
     """
+
+
     app = Flask(__name__)
     app.config.from_object(config_class_name)
     register_dashapp(app)
@@ -34,6 +37,7 @@ def create_app(config_class_name):
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard
         app = init_dashboard(app)
+
 
     with app.app_context():
         from startingbusiness_app.models import User
