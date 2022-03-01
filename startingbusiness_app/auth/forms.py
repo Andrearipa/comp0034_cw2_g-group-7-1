@@ -19,9 +19,9 @@ class SignupForm(FlaskForm):
                                                            Length(min=10, message="Password must be at least 10 characters long")])
     password_repeat = PasswordField(label='Repeat Password',
                                     validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
-    account_type = SelectField(label='Intended Use', choices= [('Professional', 'Professional'), ('Student', 'Student'),
-                                                               ('Entrepreneur', 'Entrepreneur')],
-                               validators=[DataRequired(message='This field is required')])
+    account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
+                                                             ('Entrepreneur', 'Entrepreneur')],
+                                  validators=[DataRequired(message='This field is required')])
     #profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
 
 

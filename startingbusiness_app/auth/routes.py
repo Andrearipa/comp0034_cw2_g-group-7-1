@@ -12,7 +12,7 @@ auth_bp = Blueprint('auth', __name__)
 def signup():
     form = SignupForm(request.form)
     if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, account_type = form.account_type.data)
         user.set_password(form.password.data)
         try:
             db.session.add(user)
