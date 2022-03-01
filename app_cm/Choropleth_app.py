@@ -31,7 +31,7 @@ pd.options.mode.chained_assignment = None
 df_path = Path(__file__).parent.joinpath("DBresorted_cm.csv")
 # df_path = Path('Data Set')
 df_cm_bc = pd.read_csv(str(df_path))
-#df_cm_bc = pd.read_csv('./DBresorted_cm.csv')
+# df_cm_bc = pd.read_csv('./DBresorted_cm.csv')
 
 indicator_dropdown_list = ['Starting a business - Score',
                            'Starting a business: Cost - Average (% of income per capita) - Score',
@@ -48,57 +48,76 @@ income_dropdown_list = ['All', 'Low income', 'Upper middle income', 'Lower middl
 # Creating the container as two columns of different widths to incorporate the dropdown menus and both the choropleth
 # map (main column) and bar chart (side column). Enabled the multi selection function for dropdowns and disabled the
 # clearable.
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Profiles", href="/", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Bubble Chart", href="#", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Choropleth Map", href="/dashboard", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),
+    ],
+    brand="Starting a Business",
+    brand_href="/",
+    brand_external_link=True,
+    color="primary",
+    dark=True,
+    links_left=True,
+    fluid=True,
+    sticky="top",
+)
+layout = html.Div([
+    navbar,
+    dbc.Container(fluid=True, children=[
+        dbc.Row(
+            dbc.Col(children=[html.Br()])),
 
-cm_bc_page = dbc.Container(fluid=True, children=[
-    dbc.Row(
-        dbc.Col(children=[html.Br()])),
+        dbc.Row([
+            dbc.Col(width=4, children=[
 
-    dbc.Row([
-        dbc.Col(width=4, children=[
+                html.H5("Select Region"),
+                dcc.Dropdown(
+                    id='region',
+                    options=[{'value': x, 'label': x} for x in region_dropdown_list],
+                    value=[],  # region_dropdown_list[0]
+                    clearable=False,
+                    multi=True),
+                html.Br(),
 
-            html.H5("Select Region"),
-            dcc.Dropdown(
-                id='region',
-                options=[{'value': x, 'label': x} for x in region_dropdown_list],
-                value=[],  # region_dropdown_list[0]
-                clearable=False,
-                multi=True),
-            html.Br(),
+                html.H5("Select Income Group"),
+                dcc.Dropdown(
+                    id='income',
+                    options=[{'value': x, 'label': x} for x in income_dropdown_list],
+                    value=[],  # income_dropdown_list[0]
+                    clearable=False,
+                    multi=True),
+                html.Br(),
 
-            html.H5("Select Income Group"),
-            dcc.Dropdown(
-                id='income',
-                options=[{'value': x, 'label': x} for x in income_dropdown_list],
-                value=[],  # income_dropdown_list[0]
-                clearable=False,
-                multi=True),
-            html.Br(),
+                html.H4("Top 10 charts"),
+                dcc.Graph(id='barchart'),
 
-            html.H4("Top 10 charts"),
-            dcc.Graph(id='barchart'),
+                html.H5("Select Bar Chart Year"),
+                dcc.Dropdown(
+                    id='year',
+                    options=[{'value': x, 'label': x} for x in list(range(2006, 2021, 1))],
+                    value=2006,
+                    clearable=False,
+                    multi=False),
+                html.Br()
+            ]),
 
-            html.H5("Select Bar Chart Year"),
-            dcc.Dropdown(
-                id='year',
-                options=[{'value': x, 'label': x} for x in list(range(2006, 2021, 1))],
-                value=2006,
-                clearable=False,
-                multi=False),
-            html.Br()
+            dbc.Col(width=8, children=[
+                html.H5("Select Indicator"),
+                dcc.Dropdown(
+                    id='indicator',
+                    options=[{'value': x, 'label': x} for x in indicator_dropdown_list],
+                    value=indicator_dropdown_list[0],
+                    clearable=False),
+                html.Br(),
+                dcc.Graph(id='choropleth'),
+            ]),
         ]),
-
-        dbc.Col(width=8, children=[
-            html.H5("Select Indicator"),
-            dcc.Dropdown(
-                id='indicator',
-                options=[{'value': x, 'label': x} for x in indicator_dropdown_list],
-                value=indicator_dropdown_list[0],
-                clearable=False),
-            html.Br(),
-            dcc.Graph(id='choropleth'),
-        ]),
-    ]),
-])
+    ])])
 
 
 # -----------------------------------------------Layout--------------------------------------------------------------- #
@@ -108,7 +127,7 @@ cm_bc_page = dbc.Container(fluid=True, children=[
 def init_dashboard(flask_app):
     dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/dash_app/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
-    dash_app.layout = cm_bc_page
+    dash_app.layout = layout
     init_callbacks(dash_app)
     return dash_app.server
 

@@ -1,12 +1,10 @@
-from startingbusiness_app import create_app, config
-from startingbusiness_app.config import DevelopmentConfig
+from startingbusiness_app import create_app
 
-app = create_app(config.DevelopmentConfig)
+from config import DevelopmentConfig
 
-'''
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!' '''
+
+app = create_app(DevelopmentConfig)
+
 
 
 if __name__ == '__main__':
