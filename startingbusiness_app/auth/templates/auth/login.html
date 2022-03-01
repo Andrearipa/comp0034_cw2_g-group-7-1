@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% from "_formhelpers.html" import render_field %}
+{% from "auth/_formhelpers.html" import render_field %}
 {% block content %}
     <form method=post action="{{ url_for('auth.login') }}">
         {{ form.csrf_token }}

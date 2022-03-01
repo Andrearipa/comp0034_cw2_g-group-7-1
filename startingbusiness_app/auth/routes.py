@@ -5,14 +5,14 @@ from startingbusiness_app import db
 from startingbusiness_app.auth.forms import SignupForm, LoginForm
 from startingbusiness_app.models import User
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__, template_folder= "templates")
 
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
     if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, account_type = form.account_type.data)
         user.set_password(form.password.data)
         try:
             db.session.add(user)
@@ -23,7 +23,7 @@ def signup():
             flash(f'Error, unable to register {form.email.data}. ', 'error')
             return redirect(url_for('auth.signup'))
         return redirect(url_for('main.index'))
-    return render_template('signup.html', title='Sign Up', form=form)
+    return render_template('auth/signup.html', title='Sign Up', form=form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -32,4 +32,4 @@ def login():
     if login_form.validate_on_submit():
         flash(f"You are logged in as {login_form.email.data}")
         return redirect(url_for('main.index'))
-    return render_template('login.html', title='Login', form=login_form)
+    return render_template('auth/login.html', title='Login', form=login_form)

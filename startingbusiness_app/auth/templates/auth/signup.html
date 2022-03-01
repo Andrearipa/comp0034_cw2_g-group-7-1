@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% from "_formhelpers.html" import render_field %}
+{% from "auth/_formhelpers.html" import render_field %}
 {% block content %}
 
     {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
@@ -11,7 +11,8 @@
             {{ render_field(form.email, class="form-control") }}
             {{ render_field(form.password, class="form-control") }}
             {{ render_field(form.password_repeat, class="form-control") }}
-            {{ render_field(form.account_type, class="form-control") }}
+            {{ render_field(form.account_type, class="form-control")}}
+
 
 
         </dl>
