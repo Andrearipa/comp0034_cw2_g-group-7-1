@@ -1,11 +1,38 @@
 {% extends 'layout.html' %}
 {% from "auth/_formhelpers.html" import render_field %}
 {% block content %}
-    <form method=post action="{{ url_for('auth.login') }}">
-        {{ form.csrf_token }}
-        {{ render_field(form.email, class="form-control") }}
-        {{ render_field(form.password, class="form-control") }}
-        {{ render_field(form.remember, class="form-check-input") }}
-    <p><button type="submit" class="btn btn-primary">Login</button></p>
-    </form>
+    <div class="border border-2 border-secondary bg-light mt-3 p-3">
+        <div class="content-section mt-2">
+        {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
+            <form method=post action="{{ url_for('auth.login') }}">
+                {{ form.csrf_token }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-3"><b> Register with us ! </b> </legend>
+                    <div class="form-group mb-2">
+                        {{ form.email.label(class="form-control-label") }}
+                        {{ form.email(class="form-control") }}
+                    </div>
+                    <div class="form-group mb-2">
+                        {{ form.password.label(class="form-control-label") }}
+                        {{ form.password(class="form-control") }}
+                    </div>
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input")}}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+                </fieldset>
+                <div class="form-group mb-2 align-content-center">
+                    {{ form.submit_login(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+        <small class="text-muted">
+            Forgot your password? <a class="m-lg-2" href="#">Reset</a>
+        </small>
+    </div>
+    <div class="border-top pt-3 p-3">
+        <small class="text-muted">
+            Do not have an account? <a class="m-lg-2" href="{{ url_for('auth.signup') }}">Sign Up</a>
+        </small>
+    </div>
 {% endblock %}
