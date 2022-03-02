@@ -5,7 +5,7 @@ from startingbusiness_app import db
 from startingbusiness_app.auth.forms import SignupForm, LoginForm
 from startingbusiness_app.models import User
 
-auth_bp = Blueprint('auth', __name__, template_folder= "templates")
+auth_bp = Blueprint('auth', __name__, template_folder="templates")
 
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
@@ -17,7 +17,7 @@ def signup():
         try:
             db.session.add(user)
             db.session.commit()
-            flash(f"Hello, {user.first_name} {user.last_name}. You are signed up.")
+            flash(f"Hello {user.first_name} {user.last_name}, your registration was successful!", 'success')
         except IntegrityError:
             db.session.rollback()
             flash(f'Error, unable to register {form.email.data}. ', 'error')

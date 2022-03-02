@@ -29,6 +29,8 @@ def create_app(config_class_name):
     app.register_blueprint(auth_bp)
     from startingbusiness_app.main.routes import main_bp
     app.register_blueprint(main_bp)
+    from startingbusiness_app.blog.routes import blog_bp
+    app.register_blueprint(blog_bp, url_prefix='/blog')
 
     db.init_app(app)
     #login_manager.init_app(app)
@@ -38,12 +40,12 @@ def create_app(config_class_name):
         from app_cm.Choropleth_app import init_dashboard
         app = init_dashboard(app)
 
-
     with app.app_context():
         from startingbusiness_app.models import User
         db.create_all()
 
     return app
+
 
 def register_dashapp(app):
     """ Registers the Dash app in the Flask app and make it accessible on the route /dashboard/ """

@@ -14,6 +14,7 @@ class Config(object):
     #DATA_PATH = Path('Data Set')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(Path(__file__).parent.joinpath('choropleth_app.sqlite'))
     TESTING = False
+    #EXPLAIN_TEMPLATE_LOADING = True
 
 
 class ProductionConfig(Config):
