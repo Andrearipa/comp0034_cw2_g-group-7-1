@@ -31,8 +31,6 @@ def create_app(config_class_name):
     app.register_blueprint(auth_bp)
     from startingbusiness_app.main.routes import main_bp
     app.register_blueprint(main_bp)
-    from startingbusiness_app.user.routes import user_bp
-    app.register_blueprint(user_bp)
     db.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
