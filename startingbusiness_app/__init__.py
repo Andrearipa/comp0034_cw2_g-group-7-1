@@ -1,5 +1,5 @@
 from flask import Flask
-#from flask_login import LoginManager
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 import dash
@@ -8,8 +8,10 @@ from pathlib import Path
 from flask.helpers import get_root_path
 
 
+
 db = SQLAlchemy()
 #login_manager = LoginManager()
+login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
 
@@ -29,10 +31,15 @@ def create_app(config_class_name):
     app.register_blueprint(auth_bp)
     from startingbusiness_app.main.routes import main_bp
     app.register_blueprint(main_bp)
-
+    from startingbusiness_app.user.routes import user_bp
+    app.register_blueprint(user_bp)
     db.init_app(app)
-    #login_manager.init_app(app)
+    login_manager.init_app(app)
     csrf.init_app(app)
+
+    login_manager.login_view = 'login'
+    login_manager.login_message_category = 'info'
+
 
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard

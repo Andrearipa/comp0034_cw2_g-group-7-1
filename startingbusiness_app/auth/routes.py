@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask_login import login_user
 from sqlalchemy.exc import IntegrityError
-
 from startingbusiness_app import db
 from startingbusiness_app.auth.forms import SignupForm, LoginForm
 from startingbusiness_app.models import User
@@ -12,7 +12,7 @@ auth_bp = Blueprint('auth', __name__, template_folder= "templates")
 def signup():
     form = SignupForm(request.form)
     if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, account_type = form.account_type.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, account_type=form.account_type.data, profile_image =form.profile_image.data)
         user.set_password(form.password.data)
         try:
             db.session.add(user)
@@ -31,5 +31,6 @@ def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         flash(f"You are logged in as {login_form.email.data}")
+        login_user(User.query.filter_by(email=login_form.email.data).first(), remember=login_form.remember.data)
         return redirect(url_for('main.index'))
     return render_template('auth/login.html', title='Login', form=login_form)

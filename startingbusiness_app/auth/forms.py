@@ -22,7 +22,7 @@ class SignupForm(FlaskForm):
     account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
                                                              ('Entrepreneur', 'Entrepreneur')],
                                   validators=[DataRequired(message='This field is required')])
-    #profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
+    profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
 
 
     def validate_email(self, email):
