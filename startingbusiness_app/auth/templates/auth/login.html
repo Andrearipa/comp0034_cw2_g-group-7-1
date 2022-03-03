@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% from "auth/_formhelpers.html" import render_field %}
+{% block content %}
+    <div class="border border-2 border-secondary bg-light mt-3 p-3">
+        <div class="content-section mt-2">
+        {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
+            <form method=post action="{{ url_for('auth.login') }}">
+                {{ form.csrf_token }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-3"><b> Log in ! </b> </legend>
+                    <div class="form-group mb-2">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-2">
+                        {{ form.password.label(class="form-control-label") }}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-check">
+                        {{ form.remember(class="form-check-input")}}
+                        {{ form.remember.label(class="form-check-label") }}
+                    </div>
+                </fieldset>
+                <div class="form-group mb-2 align-content-center">
+                    {{ form.submit_login(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+        <small class="text-muted">
+            Forgot your password? <a class="m-lg-2" href="#">Reset</a>
+        </small>
+    </div>
+    <div class="border-top pt-3 p-3">
+        <small class="text-muted">
+            Do not have an account yet? <a class="m-lg-2" href="{{ url_for('auth.signup') }}">Sign Up today</a>
+        </small>
+    </div>
+{% endblock %}
