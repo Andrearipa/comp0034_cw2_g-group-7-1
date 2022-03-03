@@ -20,7 +20,7 @@ def signup():
             flash(f"Hello {user.first_name} {user.last_name}, your registration was successful!", 'success')
         except IntegrityError:
             db.session.rollback()
-            flash(f'Error, unable to register {form.email.data}. ', 'error')
+            flash(f'Error, unable to register {form.email.data}.', 'error')
             return redirect(url_for('auth.signup'))
         return redirect(url_for('main.index'))
     return render_template('auth/signup.html', title='Sign Up', form=form)
@@ -30,6 +30,6 @@ def signup():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        flash(f"You are logged in as {login_form.email.data}")
+        flash(f"You are logged in as {login_form.email.data}", 'success')
         return redirect(url_for('main.index'))
     return render_template('auth/login.html', title='Login', form=login_form)

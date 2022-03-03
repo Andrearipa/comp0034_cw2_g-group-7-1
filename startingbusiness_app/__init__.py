@@ -1,5 +1,5 @@
 from flask import Flask
-#from flask_login import LoginManager
+# from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 import dash
@@ -7,9 +7,8 @@ import dash_bootstrap_components as dbc
 from pathlib import Path
 from flask.helpers import get_root_path
 
-
 db = SQLAlchemy()
-#login_manager = LoginManager()
+# login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
 
@@ -20,7 +19,6 @@ def create_app(config_class_name):
     :type config_class_name: Specifies the configuration class
     :rtype: Returns a configured Flask object
     """
-
 
     app = Flask(__name__)
     app.config.from_object(config_class_name)
@@ -33,7 +31,7 @@ def create_app(config_class_name):
     app.register_blueprint(blog_bp, url_prefix='/blog')
 
     db.init_app(app)
-    #login_manager.init_app(app)
+    # login_manager.init_app(app)
     csrf.init_app(app)
 
     with app.app_context():
@@ -41,7 +39,7 @@ def create_app(config_class_name):
         app = init_dashboard(app)
 
     with app.app_context():
-        from startingbusiness_app.models import User
+        from startingbusiness_app.models import User, Blog
         db.create_all()
 
     return app
@@ -50,18 +48,16 @@ def create_app(config_class_name):
 def register_dashapp(app):
     """ Registers the Dash app in the Flask app and make it accessible on the route /dashboard/ """
     from app_cm import Choropleth_app
-    #from app_cm.Choropleth_app import init_callbacks
-
+    # from app_cm.Choropleth_app import init_callbacks
 
     meta_viewport = {"name": "viewport", "content": "width=device-width, initial-scale=1, shrink-to-fit=no"}
 
     dashapp = dash.Dash(__name__,
-                         server=app,
-                         url_base_pathname='/dashboard/',
-                         assets_folder=get_root_path(__name__) + '/dashboard/assets/',
-                         meta_tags=[meta_viewport],
-                         external_stylesheets=[dbc.themes.SANDSTONE])
-
+                        server=app,
+                        url_base_pathname='/dashboard/',
+                        assets_folder=get_root_path(__name__) + '/dashboard/assets/',
+                        meta_tags=[meta_viewport],
+                        external_stylesheets=[dbc.themes.SANDSTONE])
 
     with app.app_context():
         dashapp.title = 'Dashboard'
@@ -69,7 +65,7 @@ def register_dashapp(app):
         Choropleth_app.init_callbacks(dashapp)
 
     # Protects the views with Flask-Login
-    #_protect_dash_views(dashapp)
+    # _protect_dash_views(dashapp)
 
 
 '''def _protect_dash_views(dash_app):

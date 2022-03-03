@@ -7,7 +7,7 @@
             <form method=post action="{{ url_for('auth.login') }}">
                 {{ form.csrf_token }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-3"><b> Register with us ! </b> </legend>
+                    <legend class="border-bottom mb-3"><b> Log in ! </b> </legend>
                     <div class="form-group mb-2">
                         {{ form.email.label(class="form-control-label") }}
                         {{ form.email(class="form-control") }}
@@ -32,7 +32,7 @@
     </div>
     <div class="border-top pt-3 p-3">
         <small class="text-muted">
-            Do not have an account? <a class="m-lg-2" href="{{ url_for('auth.signup') }}">Sign Up</a>
+            Do not have an account yet? <a class="m-lg-2" href="{{ url_for('auth.signup') }}">Sign Up today</a>
         </small>
     </div>
 {% endblock %}
