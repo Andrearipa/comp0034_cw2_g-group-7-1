@@ -17,10 +17,6 @@
                         {{ form.last_name(class="form-control") }}
                     </div>
                     <div class="form-group mb-2">
-                        {{ form.user_name.label(class="form-control-label") }}
-                        {{ form.user_name(class="form-control") }}
-                    </div>
-                    <div class="form-group mb-2">
                         {{ form.email.label(class="form-control-label") }}
                         {{ form.email(class="form-control") }}
                     </div>
@@ -30,7 +26,16 @@
                     </div>
                     <div class="form-group mb-2">
                         {{ form.password_repeat.label(class="form-control-label") }}
-                        {{ form.password_repeat(class="form-control") }}
+                        {% if form.password_repeat.errors %}
+                            {{ form.password_repeat(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password_repeat.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password_repeat(class="form-control") }}
+                        {% endif %}
                     </div>
                     <div class="form-group mb-4">
                         {{ form.account_type.label(class="form-control-label") }}

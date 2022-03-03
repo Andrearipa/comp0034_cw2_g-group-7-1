@@ -12,13 +12,13 @@ class SignupForm(FlaskForm):
                                                              Length(min=2, max=20)])
     last_name = StringField(label='Last name', validators=[DataRequired(message='Last name is required'),
                                                            Length(min=2, max=12)])
-    user_name = StringField(label='Username', validators=[DataRequired(message='Username is required'),
-                                                          Length(min=2, max=20)])
+    # user_name = StringField(label='Username', validators=[DataRequired(message='Username is required'),
+    #                                                       Length(min=2, max=20)])
     email = EmailField(label='Email address', validators=[DataRequired(message='Email address is required'),
                                                           Length(min=5,
                                                                  message="Email address is not valid (too short)")])
     password = PasswordField(label='Password', validators=[DataRequired(message='Password is required'),
-                                                           Length(min=10,
+                                                           Length(min=5,
                                                                   message="Password must be at least 10 characters long")])
     password_repeat = PasswordField(label='Confirm Password',
                                     validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
@@ -34,6 +34,11 @@ class SignupForm(FlaskForm):
         if users is not None:
             raise ValidationError('An account is already registered with this email address')
 
+    """def validate_user_name(self, user_name):
+        users = User.query.filter_by(user_name=user_name.data).first()
+        if users is not None:
+            raise ValidationError('An account is already registered with this username')
+    """
 
 class LoginForm(FlaskForm):
     email = EmailField(label='Email address', validators=[DataRequired()])

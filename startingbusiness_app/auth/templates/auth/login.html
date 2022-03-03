@@ -10,11 +10,29 @@
                     <legend class="border-bottom mb-3"><b> Log in ! </b> </legend>
                     <div class="form-group mb-2">
                         {{ form.email.label(class="form-control-label") }}
-                        {{ form.email(class="form-control") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control") }}
+                        {% endif %}
                     </div>
                     <div class="form-group mb-2">
                         {{ form.password.label(class="form-control-label") }}
-                        {{ form.password(class="form-control") }}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control") }}
+                        {% endif %}
                     </div>
                     <div class="form-check">
                         {{ form.remember(class="form-check-input")}}
