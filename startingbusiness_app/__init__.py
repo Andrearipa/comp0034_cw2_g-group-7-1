@@ -6,6 +6,7 @@ import dash
 import dash_bootstrap_components as dbc
 from pathlib import Path
 from flask.helpers import get_root_path
+from flask_mail import Mail
 
 db = SQLAlchemy()
 # login_manager = LoginManager()
@@ -33,6 +34,12 @@ def create_app(config_class_name):
     db.init_app(app)
     # login_manager.init_app(app)
     csrf.init_app(app)
+
+    app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'kate.vanelli@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'cate010600'
 
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard

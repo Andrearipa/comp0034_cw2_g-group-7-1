@@ -1,6 +1,10 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
+
+from startingbusiness_app.config import Config
 from startingbusiness_app import db
+from jose import jws
+
 
 
 class User(db.Model):
@@ -23,6 +27,22 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def get_token(self):
+        secret = Config.SECRET_KEY
+        to_decode = {'user_id': self.id}
+        token = jws.sign(to_decode, 'secret', algorithm='HS256')
+        return token
+
+    @staticmethod
+    def verify_token(token):
+        secret = Config.SECRET_KEY
+        try:
+            user_id = jws.verify(token, secret, algorithms=['HS256'])
+        except:
+            return None
+        return User.query.get(user_id)
+
 
 
 class Blog(db.Model):

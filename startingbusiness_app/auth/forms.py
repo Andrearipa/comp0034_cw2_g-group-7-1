@@ -57,3 +57,22 @@ class LoginForm(FlaskForm):
             raise ValidationError('No account found with that email address.')
         if not user.check_password(password.data):
             raise ValidationError('Incorrect password.')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = EmailField(label='Email address', validators=[DataRequired()])
+    submit_reset = SubmitField('Send Reset Email')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('No account found linked to that email address.')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField(label='Password', validators=[DataRequired(message='Password is required'),
+                                                           Length(min=5,
+                                                                  message="Password must be at least 5 characters long")])
+    password_repeat = PasswordField(label='Confirm Password',
+                                    validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    submit_new_pw = SubmitField('Reset Password')
