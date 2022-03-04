@@ -17,6 +17,8 @@
         <option value="$MODULE_DIR$/startingbusiness_app/templates" />
         <option value="$MODULE_DIR$/startingbusiness_app/auth/templates" />
         <option value="$MODULE_DIR$/startingbusiness_app/auth/templates/auth" />
+        <option value="$MODULE_DIR$/startingbusiness_app/blog/templates" />
+        <option value="$MODULE_DIR$/startingbusiness_app/blog/templates/blog" />
       </list>
     </option>
   </component>

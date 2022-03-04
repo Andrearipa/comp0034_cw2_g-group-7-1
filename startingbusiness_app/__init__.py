@@ -6,10 +6,11 @@ import dash
 import dash_bootstrap_components as dbc
 from pathlib import Path
 from flask.helpers import get_root_path
+from flask_login import LoginManager
 from flask_mail import Mail
 
 db = SQLAlchemy()
-# login_manager = LoginManager()
+login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
 
@@ -32,7 +33,9 @@ def create_app(config_class_name):
     app.register_blueprint(blog_bp, url_prefix='/blog')
 
     db.init_app(app)
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message_category = 'info'
     csrf.init_app(app)
 
     app.config['MAIL_SERVER'] = 'smtp.googlemail.com'

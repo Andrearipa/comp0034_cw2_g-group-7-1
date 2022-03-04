@@ -11,23 +11,37 @@
                     <a class="nav-link" href="{{ url_for("main.index") }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Bubble Chart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Choropleth Map</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("blog.blog") }}">Blog</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("blog.new_post") }}">Create Post</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-nav">
-            <li class="nav-item">
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("auth.profile") }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for("auth.logout") }}">Log out</a>
+                </li>
+            {% else %}
+               <li class="nav-item">
                     <a class="nav-link" href="{{ url_for("auth.signup") }}">Sign up</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for("auth.login") }}">Log in</a>
                 </li>
+            {% endif %}
         </div>
     </div>
 </nav>

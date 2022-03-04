@@ -1,8 +1,9 @@
 from flask_wtf.file import FileAllowed
 from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, BooleanField, SelectField, SubmitField, FileField
+from wtforms import StringField, PasswordField, EmailField, BooleanField, SelectField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, EqualTo, ValidationError, Length
+from flask_login import current_user
 
 from startingbusiness_app.models import User
 
@@ -57,6 +58,29 @@ class LoginForm(FlaskForm):
             raise ValidationError('No account found with that email address.')
         if not user.check_password(password.data):
             raise ValidationError('Incorrect password.')
+
+
+class UpdateProfileForm(FlaskForm):
+    first_name = StringField(label='First name', validators=[DataRequired(message='First name is required'),
+                                                             Length(min=2, max=20)])
+    last_name = StringField(label='Last name', validators=[DataRequired(message='Last name is required'),
+                                                           Length(min=2, max=12)])
+    # user_name = StringField(label='Username', validators=[DataRequired(message='Username is required'),
+    #                                                       Length(min=2, max=20)])
+    email = EmailField(label='Email address', validators=[DataRequired(message='Email address is required'),
+                                                          Length(min=5,
+                                                                 message="Email address is not valid (too short)")])
+    account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
+                                                              ('Entrepreneur', 'Entrepreneur')],
+                               validators=[DataRequired(message='This field is required')])
+    submit_reg = SubmitField('Update Profile Info')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            users = User.query.filter_by(email=email.data).first()
+            if users is not None:
+                raise ValidationError('An account is already registered with this email address')
+
 
 
 class ResetPasswordRequestForm(FlaskForm):
