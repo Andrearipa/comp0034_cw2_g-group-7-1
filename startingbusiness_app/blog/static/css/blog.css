@@ -25,20 +25,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content-section {
-  background: #ffffff;
+  background: #d9d8d8;
   padding: 10px 20px;
-  border: 1px solid #dddddd;
+  border: 1px solid #2d2d2d;
   border-radius: 3px;
   margin-bottom: 20px;
 }
 
 .article-title {
-  color: #444444;
+  color: #2c2c2c;
+  text-decoration: none;
 }
 
 a.article-title:hover {
-  color: #428bca;
-  text-decoration: none;
+  color: #1646af;
+  text-decoration: underline;
 }
 
 .article-content {
@@ -54,25 +55,23 @@ a.article-title:hover {
 .article-metadata {
   padding-bottom: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid #e3e3e3
+  border-bottom: 2px solid #ffffff
+}
+
+.article-metadata a {
+  color: #1646af;
+  text-decoration: none;
 }
 
 .article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
+  color: #2c2c2c;
+  text-decoration: underline;
 }
 
 .article-svg {
   width: 25px;
   height: 25px;
   vertical-align: middle;
-}
-
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
 }
 
 .account-heading {
