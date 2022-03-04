@@ -2,10 +2,9 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request,
 from sqlalchemy.exc import IntegrityError
 
 from startingbusiness_app import db
-from startingbusiness_app.auth.forms import SignupForm, LoginForm
 from startingbusiness_app.models import Blog, User
 from flask_login import login_required, current_user
-from startingbusiness_app.blog.forms import CreateNewPost
+from startingbusiness_app.blog.forms import CreateNewPost, ModifyPost, DeletePost, Post
 
 blog_bp = Blueprint('blog', __name__, template_folder='templates', static_folder='static')
 
@@ -35,8 +34,9 @@ def new_post():
 
 @blog_bp.route("/post/<int:post_id>")
 def post(post_id):
+    post_form = Post()
     single_post = Blog.query.get_or_404(post_id)
-    return render_template('blog/post.html', title=single_post.title, post=single_post)
+    return render_template('blog/post.html', title=single_post.title, post=single_post, form = post_form)
 
 
 @blog_bp.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
@@ -45,7 +45,7 @@ def modify_post(post_id):
     change_post = Blog.query.get_or_404(post_id)
     if change_post.author != current_user:
         abort(403)
-    post_form = CreateNewPost()
+    post_form = ModifyPost()
     if post_form.validate_on_submit():
         change_post.title = post_form.title.data
         change_post.content = post_form.content.data
@@ -67,17 +67,18 @@ def modify_post(post_id):
 @login_required
 def delete_post(post_id):
     delete_post = Blog.query.get_or_404(post_id)
+    post_form = DeletePost()
     if delete_post.author != current_user:
         abort(403)
     try:
         db.session.delete(delete_post)
         db.session.commit()
         flash('Your post has been deleted!', 'success')
+        redirect(url_for('blog.blog'))
     except IntegrityError:
         db.session.rollback()
         flash(f'Error, unable to delete the post.', 'error')
-    return redirect(url_for('blog.blog'))
-
+    return render_template('blog/blog.html', title='Update Post', form=post_form, legend='Update Post')
 
 @blog_bp.route("/user/<string:email>")
 def user_posts(email):

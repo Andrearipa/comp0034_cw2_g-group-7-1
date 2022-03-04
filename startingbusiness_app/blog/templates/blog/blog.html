@@ -10,6 +10,7 @@
               <div class="media-body">
                 <div class="article-metadata">
                     <h5><a class="mr-2" href="{{ url_for('blog.user_posts', email=post.author.email) }}">{{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
+
                     <small class="text-muted float-end">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
                     <small class="text-muted d-flex">{{ post.author.email }}</small>
                 </div>
