@@ -9,11 +9,11 @@
             <article class="media content-section">
               <div class="media-body">
                 <div class="article-metadata">
-                    <h5><a class="text-decoration-none text-primary mr-2" href="#">{{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
+                    <h5><a class="mr-2" href="{{ url_for('blog.user_posts', email=post.author.email) }}">{{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
                     <small class="text-muted float-end">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
                     <small class="text-muted d-flex">{{ post.author.email }}</small>
                 </div>
-                <h2><a class="article-title text-decoration-none" href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <h2><a class="article-title" href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
                 <p class="article-content">{{ post.content }}</p>
               </div>
             </article>

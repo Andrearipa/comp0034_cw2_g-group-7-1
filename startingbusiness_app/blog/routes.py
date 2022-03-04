@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 
 from startingbusiness_app import db
 from startingbusiness_app.auth.forms import SignupForm, LoginForm
-from startingbusiness_app.models import Blog
+from startingbusiness_app.models import Blog, User
 from flask_login import login_required, current_user
 from startingbusiness_app.blog.forms import CreateNewPost
 
@@ -12,7 +12,7 @@ blog_bp = Blueprint('blog', __name__, template_folder='templates', static_folder
 
 @blog_bp.route('')
 def blog():
-    posts = Blog.query.all()
+    posts = Blog.query.order_by(Blog.date_posted.desc()).all()
     return render_template('blog/blog.html', posts=posts, title='Blog')
 
 
@@ -78,3 +78,9 @@ def delete_post(post_id):
         flash(f'Error, unable to delete the post.', 'error')
     return redirect(url_for('blog.blog'))
 
+
+@blog_bp.route("/user/<string:email>")
+def user_posts(email):
+    user = User.query.filter_by(email=email).first_or_404()
+    posts = Blog.query.filter_by(author=user).order_by(Blog.date_posted.desc())
+    return render_template('blog/blog.html', posts=posts, user=user)
