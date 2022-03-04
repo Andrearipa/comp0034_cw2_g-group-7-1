@@ -4,6 +4,7 @@ from datetime import datetime
 from startingbusiness_app.config import Config
 from startingbusiness_app import db
 from jose import jws
+from json import loads
 
 from startingbusiness_app import db, login_manager
 from flask_login import UserMixin
@@ -45,7 +46,8 @@ class User(db.Model, UserMixin):
     def verify_token(token):
         secret = Config.SECRET_KEY
         try:
-            user_id = jws.verify(token, secret, algorithms=['HS256'])
+            token_result = jws.verify(token, secret, algorithms=['HS256'])
+            user_id = loads(token_result)['user_id']
         except:
             return None
         return User.query.get(user_id)

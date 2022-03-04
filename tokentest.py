@@ -11,10 +11,16 @@ jws.serialize_compact(__self__, protected=protected, payload=payload, key=secret
 
 from jose import jws
 from IPython.display import display
+import json
 
-signed = jws.sign({'a': 'b'}, 'secret', algorithm='HS256')
+signed = jws.sign({'a': 123456789}, 'secret', algorithm='HS256')
 display(signed)
-result = jws.verify(signed, 'secret', algorithms=['HS256'])
+result = jws.verify(signed, 'secret', algorithms=['HS256']).decode('utf-8')
+
 display(result)
+# single_value = type(result)
+single_value = json.loads(result)
+display(type(single_value))
+display(single_value['a'])
 
 

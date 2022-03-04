@@ -78,7 +78,9 @@ def send_reset_email(user):
     # flash('Check your inbox for an email with password reset instructions', 'info')
     tok = user.get_token()
     message = Message('Password Reset Email', sender='noreply@demo.com', recipients=[user.email])
-    message.body = f'''To reset your password click on the link: {url_for('auth.password_reset', token = tok, _external=True)}
+    message.body = f'''To reset your password click on the link: {url_for('auth.password_reset', token = tok, 
+                                                                          _external=True)}
+
 If the request was not made by you, please ignore this email
     '''
     # message.body = 'Hello there'
@@ -107,7 +109,7 @@ def password_reset(token):
     if not user:
         flash('The password reset link is invalid', 'warning')
         return redirect(url_for('auth.password_request'))
-    reset_pw_token_form = ResetPasswordRequestForm()
+    reset_pw_token_form = ResetPasswordForm()
     if reset_pw_token_form.validate_on_submit():
         user.set_password(reset_pw_token_form.password.data)
         try:
@@ -117,7 +119,7 @@ def password_reset(token):
             db.session.rollback()
             flash(f'Error, unable to reset password.', 'error')
             return redirect(url_for('auth.password_request'))
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     return render_template('auth/password_reset.html', title='Reset Password', form=reset_pw_token_form)
 
 
