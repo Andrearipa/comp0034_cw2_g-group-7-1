@@ -38,7 +38,7 @@ class User(db.Model, UserMixin):
     def get_token(self):
         secret = Config.SECRET_KEY
         to_decode = {'user_id': self.id}
-        token = jws.sign(to_decode, 'secret', algorithm='HS256')
+        token = jws.sign(to_decode, secret, algorithm='HS256')
         return token
 
     @staticmethod

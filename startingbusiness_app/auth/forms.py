@@ -41,6 +41,7 @@ class SignupForm(FlaskForm):
             raise ValidationError('An account is already registered with this username')
     """
 
+
 class LoginForm(FlaskForm):
     email = EmailField(label='Email address', validators=[DataRequired()])
     password = PasswordField(label='Password', validators=[DataRequired()])
@@ -80,7 +81,6 @@ class UpdateProfileForm(FlaskForm):
             users = User.query.filter_by(email=email.data).first()
             if users is not None:
                 raise ValidationError('An account is already registered with this email address')
-
 
 
 class ResetPasswordRequestForm(FlaskForm):

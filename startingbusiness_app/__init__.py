@@ -10,6 +10,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 
 db = SQLAlchemy()
+mail = Mail()
 login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
@@ -32,17 +33,19 @@ def create_app(config_class_name):
     from startingbusiness_app.blog.routes import blog_bp
     app.register_blueprint(blog_bp, url_prefix='/blog')
 
+    app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+    app.config['MAIL_PORT'] = 587
+    app.config['MAIL_USE_TLS'] = True
+    app.config['MAIL_USERNAME'] = 'kate.vanelli@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'hrsicggqwoqxuigv'
+
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
     csrf.init_app(app)
+    mail.init_app(app)
 
-    app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USERNAME'] = 'kate.vanelli@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'cate010600'
 
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard
@@ -53,6 +56,7 @@ def create_app(config_class_name):
         db.create_all()
 
     return app
+
 
 
 def register_dashapp(app):
