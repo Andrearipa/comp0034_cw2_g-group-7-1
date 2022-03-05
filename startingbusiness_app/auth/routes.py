@@ -5,10 +5,26 @@ from startingbusiness_app import db, mail
 from startingbusiness_app.auth.forms import SignupForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm, UpdateProfileForm
 from startingbusiness_app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
-from flask_mail import Message, Mail
+from flask_mail import Message
 
 auth_bp = Blueprint('auth', __name__, template_folder="templates")
-# mail = Mail(app)
+
+
+def send_registration_email(user):
+    message = Message('Starting a Business App - Registration Confirmation', recipients=[user.email])
+    message.body = f'''Hello {user.first_name},
+thank you for registering for a {user.account_type} account on Starting a Business App. 
+
+The application offers a wide range of functionalities such as:
+- regional and global comparison of indicators to start a business 
+- gender analysis tools
+- blogs for discussion  
+
+We hope you enjoy your use of the app,
+the StartingABusiness Team.
+'''
+    mail.send(message)
+
 
 @auth_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -21,6 +37,7 @@ def signup():
         try:
             db.session.add(user)
             db.session.commit()
+            send_registration_email(user)
             flash(f"Hello {user.first_name} {user.last_name}, your registration was successful!", 'success')
         except IntegrityError:
             db.session.rollback()
@@ -77,13 +94,14 @@ def profile():
 def send_reset_email(user):
     # flash('Check your inbox for an email with password reset instructions', 'info')
     tok = user.get_token()
-    message = Message('Password Reset Email', sender='noreply@demo.com', recipients=[user.email])
-    message.body = f'''To reset your password click on the link: {url_for('auth.password_reset', token = tok, 
-                                                                          _external=True)}
+    message = Message('Starting a Business App - Password Reset', recipients=[user.email])
+    message.body = f'''Hello {user.first_name},
+we have received a password reset request.
+    
+To reset your password click on the link: {url_for('auth.password_reset', token = tok, _external=True)}
 
-If the request was not made by you, please ignore this email
+If you were not the one who made this request, please ignore this email. 
     '''
-    # message.body = 'Hello there'
     mail.send(message)
 
 

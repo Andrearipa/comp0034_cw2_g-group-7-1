@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from sqlalchemy.exc import IntegrityError
 
-from startingbusiness_app import db
+from startingbusiness_app import db, mail
 from startingbusiness_app.models import Blog, User
 from flask_login import login_required, current_user
 from startingbusiness_app.blog.forms import CreateNewPost, ModifyPost, DeletePost, Post
+from flask_mail import Message
 
 blog_bp = Blueprint('blog', __name__, template_folder='templates', static_folder='static')
 
@@ -13,6 +14,21 @@ blog_bp = Blueprint('blog', __name__, template_folder='templates', static_folder
 def blog():
     posts = Blog.query.order_by(Blog.date_posted.desc()).all()
     return render_template('blog/blog.html', posts=posts, title='Blog')
+
+
+def send_post_email(user, post):
+    message = Message('Starting a Business App - New Post', recipients=[user.email])
+    message.body = f'''Hello {user.first_name},
+thank you for adding a new post to the blog!
+
+Here is your post:
+    TITLE: {post.title}
+    
+    MAIN BODY:
+    {post.content}
+'''
+    mail.send(message)
+
 
 
 @blog_bp.route('/post/new', methods=['GET', 'POST'])
@@ -24,6 +40,7 @@ def new_post():
         try:
             db.session.add(new_post)
             db.session.commit()
+            send_post_email(current_user, new_post)
             flash('Your post has been published successfully', 'success')
         except IntegrityError:
             db.session.rollback()
