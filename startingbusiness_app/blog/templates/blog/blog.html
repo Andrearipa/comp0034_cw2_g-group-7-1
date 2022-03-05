@@ -4,8 +4,26 @@
 
 {% extends 'layout.html' %}
 {%  block content %}
-    <body>
-        {%  for post in posts %}
+    <div class="row">
+    {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
+    <div class="col col-md-2" style="float:left; align-content: start">
+        <div class="align-content-start">
+            <form method=post action="{{ url_for('blog.blog') }}" autocomplete="off">
+                {{ form.csrf_token }}
+                <div class="form-group mb-lg-4">
+                    {{ form.add_post_button(class="btn btn-outline-primary btn-light btn-lg")}}
+                </div>
+                <div class="form-group mb-lg-2">
+                    {{ form.filter_keyword.label(class="form-control-label") }}
+                    {{ form.filter_keyword(class="form-control") }}
+                    <small class="text-sm-end text-muted">Press Enter to submit your word search</small>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col col-md-10 ">
+        <body>
+        {% for post in posts %}
             <article class="media content-section">
               <div class="media-body">
                 <div class="article-metadata">
@@ -20,4 +38,6 @@
             </article>
         {% endfor %}
     </body>
+    </div>
+    </div>
 {% endblock content %}
