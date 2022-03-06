@@ -18,9 +18,7 @@
 <header class="container-fluid">
     {% include 'navbar.html' %}
 </header>
-<div class="row justify-content-center mt-lg-5">
-    <div class="row mb-3">
-    </div>
+<div class="row justify-content-center">
     <div class="col-md-10">
         <div id="flash-messages">
         {# Displays flashed messages on a page #}
@@ -35,7 +33,7 @@
     </div>
 </div>
 <main>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row mb-2">
         </div>
         {% block content %}
