@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from sqlalchemy.exc import IntegrityError
-
 from startingbusiness_app import db, mail
-from startingbusiness_app.auth.forms import SignupForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm, UpdateProfileForm
+from startingbusiness_app.auth.forms import SignupForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm, \
+    UpdateProfileForm
 from startingbusiness_app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
@@ -32,7 +32,8 @@ def signup():
         return redirect(url_for('main.index'))
     form = SignupForm(request.form)
     if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data, account_type=form.account_type.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
+                    account_type=form.account_type.data)
         user.set_password(form.password.data)
         try:
             db.session.add(user)
@@ -78,7 +79,9 @@ def profile():
         current_user.account_type = update_form.account_type.data
         try:
             db.session.commit()
-            flash(f"Hello {update_form.first_name.data} {update_form.last_name.data}, your profile was updated successfully!", 'success')
+            flash(
+                f"Hello {update_form.first_name.data} {update_form.last_name.data}, your profile was updated successfully!",
+                'success')
         except IntegrityError:
             db.session.rollback()
             flash(f'Error, unable to update {update_form.email.data} account.', 'error')
@@ -98,7 +101,7 @@ def send_reset_email(user):
     message.body = f'''Hello {user.first_name},
 we have received a password reset request.
     
-To reset your password click on the link: {url_for('auth.password_reset', token = tok, _external=True)}
+To reset your password click on the link: {url_for('auth.password_reset', token=tok, _external=True)}
 
 If you were not the one who made this request, please ignore this email. 
     '''
@@ -139,5 +142,3 @@ def password_reset(token):
             return redirect(url_for('auth.password_request'))
         return redirect(url_for('auth.login'))
     return render_template('auth/password_reset.html', title='Reset Password', form=reset_pw_token_form)
-
-

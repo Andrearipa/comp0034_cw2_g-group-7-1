@@ -11,10 +11,10 @@ class Config(object):
     DEBUG = False
     SECRET_KEY = 'n_MImT106bAHxxAn2eogow'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    #DATA_PATH = Path('Data Set')
+    # DATA_PATH = Path('Data Set')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(Path(__file__).parent.joinpath('startingbusiness_app.sqlite'))
     TESTING = False
-    #EXPLAIN_TEMPLATE_LOADING = True
+    # EXPLAIN_TEMPLATE_LOADING = True
 
 
 class ProductionConfig(Config):
