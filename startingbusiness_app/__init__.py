@@ -1,13 +1,11 @@
-from flask import Flask
-# from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import CSRFProtect
 import dash
 import dash_bootstrap_components as dbc
-from pathlib import Path
+from flask import Flask
 from flask.helpers import get_root_path
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 
 db = SQLAlchemy()
 mail = Mail()
@@ -47,7 +45,6 @@ def create_app(config_class_name):
     csrf.init_app(app)
     mail.init_app(app)
 
-
     with app.app_context():
         from app_cm.Choropleth_app import init_dashboard
         app = init_dashboard(app)
@@ -57,7 +54,6 @@ def create_app(config_class_name):
         db.create_all()
 
     return app
-
 
 
 def register_dashapp(app):

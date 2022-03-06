@@ -1,13 +1,10 @@
-from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-
-from startingbusiness_app.config import Config
-from startingbusiness_app import db
-from jose import jws
 from json import loads
-
-from startingbusiness_app import db, login_manager
 from flask_login import UserMixin
+from jose import jws
+from werkzeug.security import generate_password_hash, check_password_hash
+from startingbusiness_app import db, login_manager
+from startingbusiness_app.config import Config
 
 
 @login_manager.user_loader
@@ -25,7 +22,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.Text, nullable=False)
     account_type = db.Column(db.Text, nullable=False)
     posts = db.relationship('Blog', backref='author', lazy=True)
-    #profile_image =db.column(db.) ??? store in string?
+
+    # profile_image =db.column(db.) ??? store in string?
 
     def __repr__(self):
         return f"{self.id} {self.first_name} {self.last_name} {self.email} {self.password} {self.account_type}"
@@ -53,7 +51,6 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
-
 class Blog(db.Model):
     __tablename__ = "blog"
     id = db.Column(db.Integer, primary_key=True)
@@ -61,7 +58,6 @@ class Blog(db.Model):
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
 
     def __repr__(self):
         return f"{self.title} {self.date_posted} "

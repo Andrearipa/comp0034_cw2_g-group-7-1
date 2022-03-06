@@ -1,8 +1,5 @@
-from startingbusiness_app import create_app
-
 from config import DevelopmentConfig
-
-from flask_mail import Mail
+from startingbusiness_app import create_app
 
 app = create_app(DevelopmentConfig)
 
