@@ -22,3 +22,5 @@ Werkzeug==2.0.3
 WTForms==3.0.1
 pandas~=1.4.1
 setuptools~=57.0.0
+pathlib~=1.0.1
+ipython~=8.1.1
