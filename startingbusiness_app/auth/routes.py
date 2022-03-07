@@ -56,7 +56,7 @@ def profile():
         form.first_name.data = current_user.first_name
         form.email.data = current_user.email
     image_file = url_for('static', filename=current_user.profile_image)
-    return render_template('user/profile.html', title='Account',
+    return render_template('auth/profile.html', title='Account',
                            image_file=image_file, form=form)
 
 

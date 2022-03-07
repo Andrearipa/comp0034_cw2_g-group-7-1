@@ -10,7 +10,7 @@ from flask.helpers import get_root_path
 
 
 db = SQLAlchemy()
-#login_manager = LoginManager()
+
 login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
