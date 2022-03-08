@@ -6,10 +6,12 @@ import dash
 import dash_bootstrap_components as dbc
 from pathlib import Path
 from flask.helpers import get_root_path
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 
 
 db = SQLAlchemy()
+photos = UploadSet('photos', IMAGES)
 
 login_manager = LoginManager()
 csrf = CSRFProtect()
@@ -32,6 +34,7 @@ def create_app(config_class_name):
     from startingbusiness_app.main.routes import main_bp
     app.register_blueprint(main_bp)
     db.init_app(app)
+    configure_uploads(app, photos)
     login_manager.init_app(app)
     csrf.init_app(app)
 

@@ -2,7 +2,7 @@
 {% block content %}
     <div class="content-section">
       <div class="media">
-        <img class="rounded-circle account-img" src="{{ "default.jpg" }}">
+        <img class="rounded-circle account-img" src="{{ "static/profile_images/" + current_user.profile_image }}">
         <div class="media-body">
           <h2 class="account-heading">{{ current_user.first_name }}</h2>
           <p class="text-secondary">{{ current_user.email }}</p>
@@ -40,10 +40,10 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.profile_image.label() }}
-                    {{ form.profile_image(class="form-control-file") }}
-                    {% if form.profile_image.errors %}
-                        {% for error in form.profile_image.errors %}
+                    {{ form.photo.label() }}
+                    {{ form.photo(class="form-control-file") }}
+                    {% if form.photo.errors %}
+                        {% for error in form.photo.errors %}
                             <span class="text-danger">{{ error }}</span></br>
                         {% endfor %}
                     {% endif %}

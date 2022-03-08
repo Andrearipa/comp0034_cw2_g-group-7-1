@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, PasswordField, EmailField, BooleanField, SelectField, FileField
 from wtforms.validators import DataRequired, EqualTo, ValidationError, Length
-
+from startingbusiness_app import photos
 from startingbusiness_app.models import User
 
 
@@ -22,7 +22,7 @@ class SignupForm(FlaskForm):
     account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
                                                              ('Entrepreneur', 'Entrepreneur')],
                                   validators=[DataRequired(message='This field is required')])
-    profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
+    photo = FileField('Profile picture', validators=[FileAllowed(photos, 'Images only!')])
 
 
     def validate_email(self, email):
@@ -62,8 +62,7 @@ class UpdateAccountForm(FlaskForm):
                                validators=[DataRequired(message='This field is required')])
     #profile_image = FileField(label='image',
                               #validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
-    profile_image = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'],
-                                                                                message="png and jpg formats only supprted")])
+    photo = FileField('Profile picture', validators=[FileAllowed(photos, 'Images only!')])
     submit = SubmitField('Update')
 
     def validate_email(self, email):
