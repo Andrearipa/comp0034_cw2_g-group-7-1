@@ -14,7 +14,7 @@ mail = Mail()
 login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
-csrf._exempt_views.add('dash.dash.dispatch')
+csrf._exempt_views.add('dash.dash2.dispatch')
 
 
 def create_app(config_class_name):
@@ -25,8 +25,9 @@ def create_app(config_class_name):
     """
 
     app = Flask(__name__)
+
     app.config.from_object(config_class_name)
-    register_dashapp(app)
+    #register_dashapp(app)
     from startingbusiness_app.auth.routes import auth_bp
     app.register_blueprint(auth_bp)
     from startingbusiness_app.main.routes import main_bp
@@ -71,7 +72,7 @@ def register_dashapp(app):
 
     meta_viewport = {"name": "viewport", "content": "width=device-width, initial-scale=1, shrink-to-fit=no"}
 
-    dashapp = dash.Dash(__name__,
+    """""dashapp = dash.Dash(__name__,
                         server=app,
                         url_base_pathname='/dashboard/',
                         assets_folder=get_root_path(__name__) + '/dashboard/assets/',
@@ -92,7 +93,7 @@ def register_dashapp(app):
     with app.app_context():
         dashapp2.title = 'Dashboard'
         dashapp2.layout = Bubble_Chart_app.layout2
-        Choropleth_app.init_callbacks(dashapp2)
+        Choropleth_app.init_callbacks(dashapp2)"""
 
 
 

@@ -39,6 +39,26 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 region_bubblechart_list = df_general['Region'].unique()
 year_bubblechart_list = df_general['Year'].unique()
 
+# -----------------------------------------------Navigation----------------------------------------------------------- #
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Profiles", href="/", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Bubble Chart", href="/bubble_chart", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Choropleth Map", href="/choropleth_map", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),
+    ],
+    brand="Starting a Business",
+    brand_href="/",
+    brand_external_link=True,
+    color="primary",
+    dark=True,
+    links_left=True,
+    fluid=True,
+    sticky="top",
+)
+
 # -------------------------------------------Web Page Style----------------------------------------------------------- #
 # Creating the container as one row with the region and gender selectors, one with the bubble chart(s), one with the
 # year selector and one with a table which will contain the actual values for the indicators being analysed
@@ -92,7 +112,8 @@ bubblechart_page = dbc.Container(fluid=True, children=[
 # -----------------------------------------------Layout--------------------------------------------------------------- #
 # Generating app layout based on container
 
-app.layout = bubblechart_page
+app.layout = html.Div([
+    navbar, bubblechart_page])
 layout2 = app.layout
 
 
@@ -301,7 +322,7 @@ def init_callbacks(dash_app):
 
 
 def init_dashboard(flask_app):
-    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/dash_app2/',
+    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/bubble_chart/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
     dash_app.layout = layout2
     init_callbacks(dash_app)

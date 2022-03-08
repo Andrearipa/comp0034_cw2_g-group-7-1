@@ -52,8 +52,8 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
         dbc.NavItem(dbc.NavLink("Profiles", href="/", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Bubble Chart", href="/dashboard2", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Choropleth Map", href="/dashboard", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Bubble Chart", href="/bubble_chart", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Choropleth Map", href="/choropleth_map", external_link=True)),
         dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
         dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),
     ],
@@ -125,7 +125,7 @@ layout = html.Div([
 
 
 def init_dashboard(flask_app):
-    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/dash_app/',
+    dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/choropleth_map/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
     dash_app.layout = layout
     init_callbacks(dash_app)
