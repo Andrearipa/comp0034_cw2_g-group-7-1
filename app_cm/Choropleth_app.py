@@ -128,6 +128,7 @@ def init_dashboard(flask_app):
     dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/choropleth_map/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
     dash_app.layout = layout
+    dash_app.title = "Choropleth Map"
     init_callbacks(dash_app)
     return dash_app.server
 

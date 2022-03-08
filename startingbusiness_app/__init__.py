@@ -14,7 +14,7 @@ mail = Mail()
 login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
-csrf._exempt_views.add('dash.dash2.dispatch')
+
 
 
 def create_app(config_class_name):
