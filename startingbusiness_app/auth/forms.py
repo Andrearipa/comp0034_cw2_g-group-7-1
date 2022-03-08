@@ -1,8 +1,10 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, BooleanField, SelectField, SubmitField
+from flask_wtf.file import FileAllowed
+from wtforms import StringField, PasswordField, EmailField, BooleanField, SelectField, SubmitField, FileField
 from wtforms.validators import DataRequired, EqualTo, ValidationError, Length
 
+from startingbusiness_app import photos
 from startingbusiness_app.models import User
 
 
@@ -24,9 +26,9 @@ class SignupForm(FlaskForm):
     account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
                                                               ('Entrepreneur', 'Entrepreneur')],
                                validators=[DataRequired(message='This field is required')])
+    photo = FileField(label='Profile Picture', validators=[FileAllowed(photos, message='png and jpg formats only')])
     submit_reg = SubmitField('Register')
 
-    # profile_image = FileField(label = 'image', validators=[FileAllowed(['jpg', 'png'], message='png and jpg formats only')])
 
     def validate_email(self, email):
         users = User.query.filter_by(email=email.data).first()
@@ -72,6 +74,7 @@ class UpdateProfileForm(FlaskForm):
     account_type = SelectField(label='Intended Use', choices=[('Professional', 'Professional'), ('Student', 'Student'),
                                                               ('Entrepreneur', 'Entrepreneur')],
                                validators=[DataRequired(message='This field is required')])
+    photo = FileField(label='Profile Picture', validators=[FileAllowed(photos, message='png and jpg formats only')])
     submit_reg = SubmitField('Update Profile Info')
 
     def validate_email(self, email):

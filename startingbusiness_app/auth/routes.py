@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from sqlalchemy.exc import IntegrityError
-from startingbusiness_app import db, mail
+from startingbusiness_app import db, mail, photos
 from startingbusiness_app.auth.forms import SignupForm, LoginForm, ResetPasswordRequestForm, ResetPasswordForm, \
     UpdateProfileForm
 from startingbusiness_app.models import User
@@ -31,9 +31,13 @@ def signup():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = SignupForm(request.form)
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
+        filename = None
+        if 'photo' in request.files:
+            if request.files['photo'].filename!= '':
+                filename = photos.save(request.files['photo'])
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
-                    account_type=form.account_type.data)
+                    account_type=form.account_type.data, profile_image=filename)
         user.set_password(form.password.data)
         try:
             db.session.add(user)
@@ -91,7 +95,8 @@ def profile():
         update_form.last_name.data = current_user.last_name
         update_form.email.data = current_user.email
         update_form.account_type.data = current_user.account_type
-    return render_template('auth/profile.html', title='Profile', form=update_form)
+    image_file = url_for('static', filename=current_user.profile_image)
+    return render_template('auth/profile.html', title='Profile', form=update_form, image_file=image_file)
 
 
 def send_reset_email(user):

@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\andre\PycharmProjects\comp0034_cw2_g-group-7-1\startingbusiness_app\choropleth_app.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="startingbusiness_app" uuid="9463befa-f18c-4b20-b4b9-825c18c007c5">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\andre\PycharmProjects\comp0034_cw2_g-group-7-1\startingbusiness_app\startingbusiness_app.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

@@ -4,7 +4,7 @@
     <div class="border border-2 border-secondary bg-light mt-3 p-3">
         <div class="content-section mt-2">
         {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
-            <form method=post action="{{ url_for('auth.signup') }}">
+            <form method=post action="{{ url_for('auth.signup') }}" enctype="multipart/form-data">
                 {{ form.csrf_token }}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-3"><b> Register with us ! </b> </legend>
@@ -46,12 +46,16 @@
                             {{ form.password_repeat(class="form-control") }}
                         {% endif %}
                     </div>
-                    <div class="form-group mb-4">
+                    <div class="form-group mb-3">
                         {{ form.account_type.label(class="form-control-label") }}
                         {{ form.account_type(class="form-control") }}
                     </div>
+                    <div class="form-group mb-2">
+                        {{ form.photo.label(class="form-control-label") }}
+                        {{ form.photo(class="form-control-label") }}
+                    </div>
                 </fieldset>
-                <div class="form-group mb-2 align-content-center">
+                <div class="form-group mb-2 mt-2 align-content-center">
                     {{ form.submit_reg(class="btn btn-outline-info") }}
                 </div>
             </form>

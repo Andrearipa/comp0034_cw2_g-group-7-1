@@ -22,8 +22,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.Text, nullable=False)
     account_type = db.Column(db.Text, nullable=False)
     posts = db.relationship('Blog', backref='author', lazy=True)
-
-    # profile_image =db.column(db.) ??? store in string?
+    profile_image = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
         return f"{self.id} {self.first_name} {self.last_name} {self.email} {self.password} {self.account_type}"
