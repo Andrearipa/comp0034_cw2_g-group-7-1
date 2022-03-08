@@ -1,0 +1,43 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('blog.static', filename='css/blog.css') }}">
+</head>
+
+{% extends 'layout.html' %}
+{%  block content %}
+    <div class="row">
+    {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
+    <div class="col col-md-2" style="float:left; align-content: start">
+        <div class="align-content-start">
+            <form method=post action="{{ url_for('blog.blog') }}" autocomplete="off">
+                {{ form.csrf_token }}
+                <div class="form-group mb-lg-4">
+                    {{ form.add_post_button(class="btn btn-outline-primary btn-light btn-lg")}}
+                </div>
+                <div class="form-group mb-lg-2">
+                    {{ form.filter_keyword.label(class="form-control-label") }}
+                    {{ form.filter_keyword(class="form-control") }}
+                    <small class="text-sm-end text-muted">Press Enter to submit your word search</small>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="container-fluid col col-md-9 ">
+        <body>
+        {% for post in posts %}
+            <article class="media content-section">
+              <div class="media-body">
+                <div class="article-metadata">
+                    <h5><a class="mr-2" href="{{ url_for('blog.user_posts', email=post.author.email) }}">{{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
+
+                    <small class="text-muted float-end">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
+                    <small class="text-muted d-flex">{{ post.author.email }}</small>
+                </div>
+                <h2><a class="article-title" href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+              </div>
+            </article>
+        {% endfor %}
+    </body>
+    </div>
+    </div>
+{% endblock content %}

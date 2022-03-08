@@ -1,0 +1,48 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('blog.static', filename='css/blog.css') }}">
+</head>
+
+{% extends 'layout.html' %}
+{%  block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+            <h5><a class="mr-2" href="{{ url_for('blog.user_posts', email=post.author.email) }}">{{ post.author.first_name }} {{ post.author.last_name }}</a></h5>
+            <small class="text-muted float-end">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
+            <small class="text-muted d-flex">{{ post.author.email }}</small>
+        </div>
+          <h2><a class="article-title">{{ post.title }}</a></h2>
+        <p class="article-content">{{ post.content }}</p>
+      </div>
+    {% if post.author == current_user %}
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('blog.modify_post', post_id=post.id) }}">Update</a>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+      </div>
+    {% endif %}
+    </article>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Delete Post</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                  <h4>{{ post.title }}</h4>
+                <p>Are you sure you want to delete this post?</p>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <form method=post action="{{ url_for('blog.delete_post', post_id=post.id) }}">
+                  {{ form.csrf_token }}
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+{% endblock content %}

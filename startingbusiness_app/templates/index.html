@@ -1,23 +1,26 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    <br>
-    <p>The aim of our app is to encourage entrepreneurs
-               from all around the world to start up their business. We do that by making data more accessible
-               about the ease of setting up a business in a variety of countries and regions, based on different
-               indicators: the number of procedures required, the cost, the entrepreneur's gender and the time required
-               to set up a business. This available data is displayed in a variety of charts, and is aimed not only at
-               entrepreneurs, but also anyone interested in finding out more about the factors that might influence the start
-               up of a business. </p>
-    <br>
-    <h3>Functionality of the App</h3>
-    <br>
-    <p>Are you an entrepreneur? A local administrator? Or simply a student? Our range of charts will help you
-               figure out the impact certain regions or countries have on the ease of starting up a business.</p>
-    <br>
-    <p>Our choropleth map not only enables you to choose which scores to display
-               (time, cost, number of procedures, overall), but also to see the evolution of those scores in time by clicking on the play
-               button on the year slider. Moreover, you can focus on specific geographical regions or income groups listed in a dropdown
-               menu, and identify which are the best countries to start up a business by looking at the bar chart on the side."</p>
-
+    <div class="row justify-content-md-center">
+        <div class="col col-md-10 ">
+            <h1>{{ title }}</h1>
+            <br>
+            <p>The aim of our app is to encourage entrepreneurs
+                       from all around the world to start up their business. We do that by making data more accessible
+                       about the ease of setting up a business in a variety of countries and regions, based on different
+                       indicators: the number of procedures required, the cost, the entrepreneur's gender and the time required
+                       to set up a business. This available data is displayed in a variety of charts, and is aimed not only at
+                       entrepreneurs, but also anyone interested in finding out more about the factors that might influence the start
+                       up of a business. </p>
+            <br>
+            <h3>Functionality of the App</h3>
+            <br>
+            <p>Are you an entrepreneur? A local administrator? Or simply a student? Our range of charts will help you
+                       figure out the impact certain regions or countries have on the ease of starting up a business.</p>
+            <br>
+            <p>Our choropleth map not only enables you to choose which scores to display
+                       (time, cost, number of procedures, overall), but also to see the evolution of those scores in time by clicking on the play
+                       button on the year slider. Moreover, you can focus on specific geographical regions or income groups listed in a dropdown
+                       menu, and identify which are the best countries to start up a business by looking at the bar chart on the side."</p>
+        </div>
+    </div>
 {% endblock %}
