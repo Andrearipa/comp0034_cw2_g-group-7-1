@@ -21,3 +21,43 @@ To do:
 - Check routes for testing
 - Change the config parameters (disable csrf and add a different database for testing)
 
+# Ideas for Testing
+In models (within unit folder), test:
+- user
+  - check that the user is correctly created
+  - test hash password
+  - check the get / decode token methods
+- blog 
+  - check that a blog is correctly created
+
+In routes (functional folder), we check interactions with the SQL database, such as:
+- check that all the links / pages are valid 
+- check accessibility based on login status 
+- create a new user and then a new post and see if that is recorded on the database
+- check what happens if emails are repeated
+- check for password differences
+- check for password updates
+- check login functionality
+- design a test that does signup
+  - an incorrect signup -> controls that it no user is registered if there are errors in the signup form
+  - a correct signup -> the person is added to a new line in the database
+- design a test for login
+  - incorrect first
+  - correct 
+  - ask for password reset -> go to the link with generated token, reset the password, check that it has been reset
+- check changes on profile
+  - change one or more data and verify whether they have been changed in the database
+- posts:
+  - create -> check in database
+  - delete -> check in database
+
+In browser:
+- checking headings, etc
+- use the by css selector 
+- use waits
+
+Have a test for complete interaction of user with webpage
+
+# References
+if we have been following a general guideline, insert the reference here
+if we have copied code specifically, we can reference it within the py file itself -> to be done for the blog

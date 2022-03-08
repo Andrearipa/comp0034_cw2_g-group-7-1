@@ -32,4 +32,6 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     ENV = 'testing'
     TESTING = True
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    WTF_CSRF_ENABLED = False
