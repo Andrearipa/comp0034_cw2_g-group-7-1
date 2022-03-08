@@ -52,7 +52,7 @@ navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
         dbc.NavItem(dbc.NavLink("Profiles", href="/", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Bubble Chart", href="#", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Bubble Chart", href="/dashboard2", external_link=True)),
         dbc.NavItem(dbc.NavLink("Choropleth Map", href="/dashboard", external_link=True)),
         dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
         dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),

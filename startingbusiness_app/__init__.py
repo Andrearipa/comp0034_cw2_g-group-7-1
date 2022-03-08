@@ -14,6 +14,7 @@ mail = Mail()
 login_manager = LoginManager()
 csrf = CSRFProtect()
 csrf._exempt_views.add('dash.dash.dispatch')
+csrf._exempt_views.add('dash.dash.dispatch')
 
 
 def create_app(config_class_name):
@@ -56,13 +57,17 @@ def create_app(config_class_name):
         from startingbusiness_app.models import User, Blog
         db.create_all()
 
+    with app.app_context():
+        from Bubble_Chart.Bubble_Chart_app import init_dashboard
+        app = init_dashboard(app)
+
     return app
 
 
 def register_dashapp(app):
     """ Registers the Dash app in the Flask app and make it accessible on the route /dashboard/ """
     from app_cm import Choropleth_app
-    # from app_cm.Choropleth_app import init_callbacks
+    from Bubble_Chart import Bubble_Chart_app
 
     meta_viewport = {"name": "viewport", "content": "width=device-width, initial-scale=1, shrink-to-fit=no"}
 
@@ -77,6 +82,19 @@ def register_dashapp(app):
         dashapp.title = 'Dashboard'
         dashapp.layout = Choropleth_app.layout
         Choropleth_app.init_callbacks(dashapp)
+
+    dashapp2 = dash.Dash(__name__,
+                        server=app,
+                        url_base_pathname='/dashboard2/',
+                        assets_folder=get_root_path(__name__) + '/dashboard/assets/',
+                        meta_tags=[meta_viewport],
+                        external_stylesheets=[dbc.themes.SANDSTONE])
+    with app.app_context():
+        dashapp2.title = 'Dashboard'
+        dashapp2.layout = Bubble_Chart_app.layout2
+        Choropleth_app.init_callbacks(dashapp2)
+
+
 
     # Protects the views with Flask-Login
     # _protect_dash_views(dashapp)
