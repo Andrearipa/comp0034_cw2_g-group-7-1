@@ -12,9 +12,7 @@ class SignupForm(FlaskForm):
     first_name = StringField(label='First name', validators=[DataRequired(message='First name is required'),
                                                              Length(min=2, max=20)])
     last_name = StringField(label='Last name', validators=[DataRequired(message='Last name is required'),
-                                                           Length(min=2, max=12)])
-    # user_name = StringField(label='Username', validators=[DataRequired(message='Username is required'),
-    #                                                       Length(min=2, max=20)])
+                                                           Length(min=2, max=16)])
     email = EmailField(label='Email address', validators=[DataRequired(message='Email address is required'),
                                                           Length(min=5,
                                                                  message="Email address is not valid (too short)")])

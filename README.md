@@ -19,6 +19,12 @@ To do:
 - Check routes for testing
 - Change the config parameters (disable csrf and add a different database for testing)
 
+- add standard picture when no custom profile pic is selected 
+
+
+Questions:
+- how to add posts to the database
+
 # Ideas for Testing
 In models (within unit folder), test: - DILARA
 - user
