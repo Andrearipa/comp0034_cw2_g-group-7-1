@@ -13,7 +13,7 @@
         </div>
         <div class="content-section mt-2">
         {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
-            <form method=post action="{{ url_for('auth.profile') }}">
+            <form method=post action="{{ url_for('auth.profile') }}" enctype="multipart/form-data">
                 {{ form.csrf_token }}
                 <fieldset class="form-group">
                     <legend class="border-bottom mb-3"><b> Profile Info </b> </legend>
