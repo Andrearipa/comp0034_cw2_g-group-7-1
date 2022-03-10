@@ -3,59 +3,61 @@
 {% block content %}
     <div class="border border-2 border-secondary bg-light mt-3 p-3">
         <div class="content-section">
-          <div class="media">
-              <img class="rounded-circle account-img" src="{{ "static/profile_images/" + current_user.profile_image}}">
-                <div class="media-body">
-                  <h2 class="account-heading">{{ current_user.first_name}} {{ current_user.last_name}}</h2>
-                  <p class="text-secondary">{{ current_user.email }}</p>
-                </div>
-          </div>
-        </div>
-        <div class="content-section mt-2">
-        {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
-            <form method=post action="{{ url_for('auth.profile') }}" enctype="multipart/form-data">
-                {{ form.csrf_token }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-3"><b> Profile Info </b> </legend>
-                    <div class="form-group mb-2">
-                        {{ form.first_name.label(class="form-control-label") }}
-                        {{ form.first_name(class="form-control") }}
-                    </div>
-                    <div class="form-group mb-2">
-                        {{ form.last_name.label(class="form-control-label") }}
-                        {{ form.last_name(class="form-control") }}
-                    </div>
-                    <div class="form-group mb-2">
-                        {{ form.email.label(class="form-control-label") }}
-                        {% if form.email.errors %}
-                            {{ form.email(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.email.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.email(class="form-control") }}
+            <div class="row">
+                <div class="col col-md-3 media">
+                    <img class="rounded-circle account-img" src="{{ "static/profile_images/" + current_user.profile_image}}">
+                    <div class="form-group mt-3">
+                        {{ form.photo.label() }}
+                        {{ form.photo(class="form-control-file") }}
+                        {% if form.photo.errors %}
+                            {% for error in form.photo.errors %}
+                                <span class="text-danger">{{ error }}</span></br>
+                            {% endfor %}
                         {% endif %}
                     </div>
-                    <div class="form-group mb-3">
-                        {{ form.account_type.label(class="form-control-label") }}
-                        {{ form.account_type(class="form-control") }}
-                    </div>
-                    <div class="form-group mb-4">
-                    {{ form.photo.label() }}
-                    {{ form.photo(class="form-control-file") }}
-                    {% if form.photo.errors %}
-                        {% for error in form.photo.errors %}
-                            <span class="text-danger">{{ error }}</span></br>
-                        {% endfor %}
-                    {% endif %}
-                    </div>
-                </fieldset>
-                <div class="form-group mb-2 align-content-center">
-                    {{ form.submit_reg(class="btn btn-outline-info") }}
                 </div>
-            </form>
+                <div class="col col-md-9 media-body">
+                  <h2 class="account-heading">{{ current_user.first_name}} {{ current_user.last_name}}</h2>
+                  <p class="text-secondary">{{ current_user.email }}</p>
+                    <div class="content-section mt-2">
+                    {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
+                        <form method=post action="{{ url_for('auth.profile') }}" enctype="multipart/form-data">
+                            {{ form.csrf_token }}
+                            <fieldset class="form-group">
+                                <legend class="border-bottom mb-3"><b> Profile Info </b> </legend>
+                                <div class="form-group mb-2">
+                                    {{ form.first_name.label(class="form-control-label") }}
+                                    {{ form.first_name(class="form-control") }}
+                                </div>
+                                <div class="form-group mb-2">
+                                    {{ form.last_name.label(class="form-control-label") }}
+                                    {{ form.last_name(class="form-control") }}
+                                </div>
+                                <div class="form-group mb-2">
+                                    {{ form.email.label(class="form-control-label") }}
+                                    {% if form.email.errors %}
+                                        {{ form.email(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.email.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.email(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                                <div class="form-group mb-3">
+                                    {{ form.account_type.label(class="form-control-label") }}
+                                    {{ form.account_type(class="form-control") }}
+                                </div>
+                            </fieldset>
+                            <div class="form-group mb-2 align-content-center">
+                                {{ form.submit_reg(class="btn btn-outline-info") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
