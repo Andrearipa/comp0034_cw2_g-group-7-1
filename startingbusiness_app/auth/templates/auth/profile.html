@@ -1,20 +1,12 @@
 {% extends 'layout.html' %}
-{% from "auth/_formhelpers.html" import render_field %}
+{% from "auth/_formhelpers.html" import render_field  %}
 {% block content %}
     <div class="border border-2 border-secondary bg-light mt-3 p-3">
         <div class="content-section">
             <div class="row">
                 <div class="col col-md-3 media">
                     <img class="rounded-circle account-img" src="{{ "static/profile_images/" + current_user.profile_image}}">
-                    <div class="form-group mt-3">
-                        {{ form.photo.label() }}
-                        {{ form.photo(class="form-control-file") }}
-                        {% if form.photo.errors %}
-                            {% for error in form.photo.errors %}
-                                <span class="text-danger">{{ error }}</span></br>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
+
                 </div>
                 <div class="col col-md-9 media-body">
                   <h2 class="account-heading">{{ current_user.first_name}} {{ current_user.last_name}}</h2>
@@ -50,6 +42,16 @@
                                     {{ form.account_type.label(class="form-control-label") }}
                                     {{ form.account_type(class="form-control") }}
                                 </div>
+                                <div class="form-group mt-3">
+                                    {{ form.photo.label() }}
+                                    {{ form.photo(class="form-control-file") }}
+                                    {% if form.photo.errors %}
+                                        {% for error in form.photo.errors %}
+                                            <span class="text-danger">{{ error }}</span></br>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
                             </fieldset>
                             <div class="form-group mb-2 align-content-center">
                                 {{ form.submit_reg(class="btn btn-outline-info") }}
