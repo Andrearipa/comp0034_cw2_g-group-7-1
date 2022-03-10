@@ -13,16 +13,14 @@ Points to mention:
 
 To do:
 
-- remember me always on right now
-- add formatting to email body
-- light and dark mode (?)
 - custom error handling
-- integration of charts
+- integration of charts (add bubble chart)
+
 - Check routes for testing
 - Change the config parameters (disable csrf and add a different database for testing)
 
 # Ideas for Testing
-In models (within unit folder), test:
+In models (within unit folder), test: - DILARA
 - user
   - check that the user is correctly created
   - test hash password
@@ -30,7 +28,7 @@ In models (within unit folder), test:
 - blog 
   - check that a blog is correctly created
 
-In routes (functional folder), we check interactions with the SQL database, such as:
+In routes (functional folder), we check interactions with the SQL database, such as: - ANDREA + CATE
 - check that all the links / pages are valid 
 - check accessibility based on login status 
 - create a new user and then a new post and see if that is recorded on the database
@@ -51,7 +49,7 @@ In routes (functional folder), we check interactions with the SQL database, such
   - create -> check in database
   - delete -> check in database
 
-In browser:
+In browser: - NIKOS
 - checking headings, etc
 - use the by css selector 
 - use waits
