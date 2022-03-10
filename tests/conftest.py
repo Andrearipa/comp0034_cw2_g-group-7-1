@@ -32,5 +32,14 @@ def db(app):
         database.session.add(user_2)
         database.session.add(user_3)
         database.session.commit()
+
+        post_1 = Blog(title='Test Post 1', content='Content for test post 1 by user 1', author='kate.vanelli@gmail.com')
+        post_2 = Blog(title='Test Post 2', content='Content for test post 2 by user 1')
+        post_3 = Blog(title='Test Post 3', content='Hello pizza is good')
+        database.session.add(post_1)
+        database.session.add(post_2)
+        database.session.add(post_3)
+
+        database.session.commit()
     yield database
     database.drop_all()
