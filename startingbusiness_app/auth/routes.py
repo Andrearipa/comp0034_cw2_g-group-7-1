@@ -6,6 +6,9 @@ from startingbusiness_app.auth.forms import SignupForm, LoginForm, ResetPassword
 from startingbusiness_app.models import User
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+from werkzeug.security import generate_password_hash
+from PIL import Image
+from pathlib import Path
 
 auth_bp = Blueprint('auth', __name__, template_folder="templates")
 
@@ -32,10 +35,16 @@ def signup():
         return redirect(url_for('main.index'))
     form = SignupForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
-        filename = None
+        filename = "default.jpg"
         if 'photo' in request.files:
             if request.files['photo'].filename!= '':
+                request.files['photo'].filename = generate_password_hash(request.files['photo'].filename) + '.jpg'
                 filename = photos.save(request.files['photo'])
+                image_path = Path(__file__).parent
+                image_path2 = image_path.parent.joinpath("static/profile_images")
+                temp_image = Image.open(str(image_path2) + '/'+filename)
+                temp_image.thumbnail((400,400))
+                temp_image.save(str(image_path2) + '/'+filename)
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
                     account_type=form.account_type.data, profile_image=filename)
         user.set_password(form.password.data)
@@ -81,6 +90,18 @@ def profile():
         current_user.last_name = update_form.last_name.data
         current_user.email = update_form.email.data
         current_user.account_type = update_form.account_type.data
+        if request.method == 'POST' and update_form.validate_on_submit():
+            filename = current_user.profile_image
+            if 'photo' in request.files:
+                if request.files['photo'].filename != '':
+                    request.files['photo'].filename = generate_password_hash(request.files['photo'].filename) + '.jpg'
+                    filename = photos.save(request.files['photo'])
+                    image_path = Path(__file__).parent
+                    image_path2 = image_path.parent.joinpath("static/profile_images")
+                    temp_image = Image.open(str(image_path2) + '/' + filename)
+                    temp_image.thumbnail((400, 400))
+                    temp_image.save(str(image_path2) + '/' + filename)
+        current_user.profile_image = filename
         try:
             db.session.commit()
             flash(
@@ -95,8 +116,8 @@ def profile():
         update_form.last_name.data = current_user.last_name
         update_form.email.data = current_user.email
         update_form.account_type.data = current_user.account_type
-    image_file = url_for('static', filename=current_user.profile_image)
-    return render_template('auth/profile.html', title='Profile', form=update_form, image_file=image_file)
+
+    return render_template('auth/profile.html', title='Profile', form=update_form, image_file= current_user.profile_image)
 
 
 def send_reset_email(user):
