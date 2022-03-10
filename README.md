@@ -42,6 +42,7 @@ In routes (functional folder), we check interactions with the SQL database, such
 - check for password differences
 - check for password updates
 - check login functionality
+
 - design a test that does signup
   - an incorrect signup -> controls that it no user is registered if there are errors in the signup form
   - a correct signup -> the person is added to a new line in the database
