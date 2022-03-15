@@ -177,8 +177,8 @@ def test_au09_change_email(test_client, db):
     WHEN they submit a profile change form to modify their email
     THEN the email stored for their account is correctly modified
     """
-    if not current_user:
-        login(test_client, email='danielle_konig@123.co.uk', password='Canada789')
+
+    login(test_client, email='danielle_konig@123.co.uk', password='Canada789')
 
     profile_response = profile_change(test_client, 'danielle_konig@789.co.uk')
 
