@@ -23,16 +23,18 @@ def db(app):
     with app.app_context():
         database.app = app
         database.create_all()
-        user_1 = User(first_name='Andrea', last_name='Ripa', email='andrearipa4@gmail.com', password=generate_password_hash("Italy123"),
+        user_1 = User(first_name='Andrea', last_name='Ripa', email='andrearipa4@gmail.com',
+                      password=generate_password_hash("Italy123"),
                       account_type='Student')
         user_2 = User(first_name='Caterina', last_name='Vanelli Coralli', email='kate.vanelli@gmail.com',
                       password=generate_password_hash('Hello456'), account_type='Professional')
-        user_3 = User(first_name='Danielle', last_name='Konig', email='danielle_konig@123.co.uk', password=generate_password_hash('Canada789'),
+        user_3 = User(first_name='Danielle', last_name='Konig', email='danielle_konig@123.co.uk',
+                      password=generate_password_hash('Canada789'),
                       account_type='Entrepreneur')
 
         user_1.posts.append(Blog(title='Test Post 1', content='Content for test post 1 by user 1'))
         user_2.posts.append(Blog(title='Test Post 2', content='Content for test post 2 by user 2'))
-        user_2.posts.append(Blog(title='Test Post 3', content='Interesting business score for italy in 2017'))
+        user_2.posts.append(Blog(title='Test Post 3', content='Interesting business score for Italy in 2017'))
 
         database.session.add(user_1)
         database.session.add(user_2)
@@ -41,3 +43,18 @@ def db(app):
 
     yield database
     database.drop_all()
+
+
+@pytest.fixture(scope='function', autouse=True)
+def session(db, app):
+    """ Roll back database changes at the end of each test """
+    with app.app_context():
+        connection = db.engine.connect()
+        transaction = connection.begin()
+        options = dict(bind=connection, binds={})
+        sess = db.create_scoped_session(options=options)
+        db.session = sess
+        yield sess
+        sess.remove()
+        transaction.rollback()
+        connection.close()
