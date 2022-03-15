@@ -43,7 +43,7 @@ year_bubblechart_list = df_general['Year'].unique()
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Profiles", href="/", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Profile", href="/profile", external_link=True)),
         dbc.NavItem(dbc.NavLink("Bubble Chart", href="/bubble_chart", external_link=True)),
         dbc.NavItem(dbc.NavLink("Choropleth Map", href="/choropleth_map", external_link=True)),
         dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
