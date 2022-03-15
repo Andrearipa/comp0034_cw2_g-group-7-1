@@ -182,7 +182,7 @@ def test_au09_change_email(test_client, db):
 
     profile_response = profile_change(test_client, 'danielle_konig@789.co.uk')
 
-    #assert b'your profile was updated successfully!' in profile_response.data
+    assert b'your profile was updated successfully!' in profile_response.data
     response = login(test_client, email='danielle_konig@789.co.uk', password='Canada789')
     assert b'Profile' in response.data
     assert b'Log out' in response.data
