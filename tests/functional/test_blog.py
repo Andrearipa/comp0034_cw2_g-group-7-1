@@ -3,7 +3,6 @@ This file is used to test the different components linked to the blog blueprint,
 together properly. Especially the tests focus on the functionality that the user will be using and the required
 interactions. These are mainly two and are with the flask application routes and the database.
 """
-from startingbusiness_app.models import User
 
 
 def login(client, email, password):
@@ -36,13 +35,14 @@ def test_blog(test_client, db):
     assert b'pizza' in response.data
 
 
-def test_bl01_guest_access_blog():
+def test_bl01_guest_access_blog(test_client, db):
     """
     GIVEN that the app is running and user is not logged in
     WHEN they try to access the blog
-    THEN they should be able to see the posts
+    THEN they should be able to see the posts (find the word pizza)
     """
-    pass
+    response = blog(test_client)
+    assert b'pizza' in response.data
 
 
 def test_bl02_logged_user_access_blog():
