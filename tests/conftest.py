@@ -6,13 +6,23 @@ from werkzeug.security import generate_password_hash
 
 @pytest.fixture(scope='session')
 def app():
-    " Create an app to be used for testing"
+    """
+    Create an app to be used for testing.
+
+    :return: app created for testing config
+    """
     app = create_app(config_class_name=config.TestingConfig)
     yield app
 
 
 @pytest.fixture(scope='session')
 def test_client(app):
+    """
+    Create a test client that can be used to make HTTP requests and other actions.
+
+    :param app: fixture to create the app
+    :return: client for testing
+    """
     with app.test_client() as testing_client:
         with app.app_context():
             yield testing_client
@@ -20,6 +30,12 @@ def test_client(app):
 
 @pytest.fixture(scope='session')
 def db(app):
+    """
+    Returns a database used for testing purposes with added values for both the user and blog table.
+
+    :param app: fixture to create the app
+    :return: database with user and blog values
+    """
     with app.app_context():
         database.app = app
         database.create_all()
@@ -48,7 +64,13 @@ def db(app):
 
 @pytest.fixture(scope='function', autouse=True)
 def session(db, app):
-    """ Roll back database changes at the end of each test """
+    """
+    Roll back database changes at the end of each test.
+
+    :param db: database defined for session scope with user and blog for testing
+    :param app: app running for testing config
+    :return: None
+    """
     with app.app_context():
         connection = db.engine.connect()
         transaction = connection.begin()
@@ -59,4 +81,3 @@ def session(db, app):
         sess.remove()
         transaction.rollback()
         connection.close()
-

@@ -1,3 +1,7 @@
+"""
+This file was developed to establish the routes for the authentication blueprint.
+"""
+
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from sqlalchemy.exc import IntegrityError
 from startingbusiness_app import db, mail, photos
@@ -42,9 +46,9 @@ def signup():
                 filename = photos.save(request.files['photo'])
                 image_path = Path(__file__).parent
                 image_path2 = image_path.parent.joinpath("static/profile_images")
-                temp_image = Image.open(str(image_path2) + '/'+filename)
+                temp_image = Image.open(str(image_path2) + '/' + filename)
                 temp_image.thumbnail((400, 400))
-                temp_image.save(str(image_path2) + '/'+filename)
+                temp_image.save(str(image_path2) + '/' + filename)
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
                     account_type=form.account_type.data, profile_image=filename)
         user.set_password(form.password.data)
@@ -101,11 +105,11 @@ def profile():
                     temp_image = Image.open(str(image_path2) + '/' + filename)
                     temp_image.thumbnail((400, 400))
                     temp_image.save(str(image_path2) + '/' + filename)
-        current_user.profile_image = filename
+            current_user.profile_image = filename
         try:
             db.session.commit()
             flash(
-                f"Hello {update_form.first_name.data} {update_form.last_name.data}, your profile was updated successfully!",
+                f"{update_form.first_name.data} {update_form.last_name.data}, your profile was updated successfully!",
                 'success')
         except IntegrityError:
             db.session.rollback()
@@ -117,7 +121,8 @@ def profile():
         update_form.email.data = current_user.email
         update_form.account_type.data = current_user.account_type
 
-    return render_template('auth/profile.html', title='Profile', form=update_form, image_file= current_user.profile_image)
+    return render_template('auth/profile.html', title='Profile', form=update_form,
+                           image_file=current_user.profile_image)
 
 
 def send_reset_email(user):

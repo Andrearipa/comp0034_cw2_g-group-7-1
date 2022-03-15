@@ -1,12 +1,15 @@
-from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy import or_
+"""
+This file was developed to establish the routes for the blog blueprint.
+"""
 
-from startingbusiness_app import db, mail
-from startingbusiness_app.models import Blog, User
+from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from flask_login import login_required, current_user
-from startingbusiness_app.blog.forms import CreateNewPost, ModifyPost, DeletePost, Post, BlogPage
 from flask_mail import Message
+from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
+from startingbusiness_app import db, mail
+from startingbusiness_app.blog.forms import CreateNewPost, ModifyPost, Post, BlogPage
+from startingbusiness_app.models import Blog, User
 
 blog_bp = Blueprint('blog', __name__, template_folder='templates', static_folder='static')
 
@@ -18,7 +21,8 @@ def blog():
     word = blog_form.filter_keyword.data
     if blog_form.validate_on_submit():
         if word:
-            posts = Blog.query.filter(or_(Blog.title.contains(word), Blog.content.contains(word))).order_by(Blog.date_posted.desc())
+            posts = Blog.query.filter(or_(Blog.title.contains(word), Blog.content.contains(word))).order_by(
+                Blog.date_posted.desc())
             blog_form.filter_keyword.data = ""
             flash(f"Posts filtered by '{word}'", "info")
             return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
@@ -27,16 +31,16 @@ def blog():
     return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
 
 
-def send_post_email(user, post):
+def send_post_email(user, post_email):
     message = Message('Starting a Business App - New Post', recipients=[user.email])
     message.body = f'''Hello {user.first_name},
 thank you for adding a new post to the blog!
 
 Here is your post:
-    TITLE: {post.title}
+    TITLE: {post_email.title}
     
     MAIN BODY:
-    {post.content}
+    {post_email.content}
 '''
     mail.send(message)
 

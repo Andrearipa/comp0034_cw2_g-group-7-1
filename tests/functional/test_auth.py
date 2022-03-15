@@ -1,35 +1,75 @@
 # Response Links https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#redirection_messages
-from flask_login import login_user, current_user
+"""
+This file is used to test the different components linked to the auth blueprint, to check whether they are working
+together properly. Especially the tests focus on the functionality that the user will be using and the required
+interactions. These are mainly two and are with the flask application routes and the database.
+"""
+
+from flask_login import current_user
 from startingbusiness_app.models import User
 from werkzeug.security import generate_password_hash
 
 
 def register_user(client, user_info):
-    """ Given a Registration Form, Registers a new user"""
-    return client.post('/signup', data = user_info, follow_redirects=True)
+    """
+    Given a Registration Form, Registers a new user.
+
+    :param client: test_client
+    :param user_info: dictionary containing user info to be changed
+    :return: http response
+    """
+    return client.post('/signup', data=user_info, follow_redirects=True)
 
 
 def login(client, email, password):
-    """Provides login to be used in tests"""
+    """
+    Provides login to be used in tests.
+
+    :param client: test_client
+    :param email: user email
+    :param password: user password
+    :return: http response
+    """
     return client.post('/login', data=dict(email=email, password=password), follow_redirects=True)
 
 
 def submit_password_request(client, email):
-    """Submits a password request form"""
+    """
+    Submits a password request form.
+
+    :param client: test_client
+    :param email: user email
+    :return: http response
+    """
     return client.post('/reset_password', data=dict(email=email), follow_redirects=True)
 
 
 def submit_password_reset(client, link, password):
-    """ Sends a password change """
+    """
+    Sends a password change.
+
+    :param client: test_client
+    :param link: link for specific change password request
+    :param password: user password
+    :return: http response
+    """
     return client.post(link, data=dict(password=password, password_repeat=password), follow_redirects=True)
 
 
 def profile_change(client, email):
-    """ Changes the profile """
+    """
+    Changes the profile.
+
+    :param client: test_client
+    :param email: email to be changed
+    :return: http response
+    """
     photo_path = 'startingbusiness_app/static/profile_images/Default.jpg'
     return client.post('/profile',
-                       data=dict(first_name='Default', last_name='Default', email=email, account_type='Entrepreneur', photo=photo_path),
+                       data=dict(first_name='Default', last_name='Default', email=email, account_type='Entrepreneur',
+                                 photo=photo_path),
                        follow_redirects=True)
+
 
 def test_au01_registration_correct(test_client, db):
     """
@@ -44,7 +84,7 @@ def test_au01_registration_correct(test_client, db):
         test_client.get('/logout')
 
     new_user = dict(first_name='Caterina', last_name='Rossi', email='testnewuser@test.1',
-                    password='CiaoCiao', password_repeat ='CiaoCiao', account_type='Student')
+                    password='CiaoCiao', password_repeat='CiaoCiao', account_type='Student')
     response = register_user(test_client, new_user)
     end_users = User.query.count()
     assert b'administrator' in response.data
@@ -94,7 +134,7 @@ def test_au03_registration_different_passwords(test_client, db):
     assert end_users - start_users == 0
 
 
-def test_au06_login_correct(test_client, db):
+def test_au04_login_correct(test_client, db):
     """
     GIVEN a user is registered
     WHEN they submit a valid login form (i.e. correct email and password)
@@ -114,8 +154,7 @@ def test_au06_login_correct(test_client, db):
     assert b'Log out' in response.data
 
 
-
-def test_au07_login_incorrect(test_client, db):
+def test_au05_login_incorrect(test_client, db):
     """
     GIVEN a user is registered
     WHEN they submit an invalid login form (i.e. incorrect password for correct email)
@@ -135,7 +174,7 @@ def test_au07_login_incorrect(test_client, db):
     assert b'Log out' not in response.data
 
 
-def test_au08_password_reset(test_client, db):
+def test_au06_password_reset(test_client, db):
     """
     GIVEN a user is registered
     WHEN they request a password reset from the login page
@@ -144,8 +183,9 @@ def test_au08_password_reset(test_client, db):
         AND WHEN the user submits a correct form
             THEN the new password is correctly associated with their account
     """
-    new_user = User(first_name='Andrea', last_name='Ripa', email='testnewuser@test.1', password=generate_password_hash("Italy123"),
-                      account_type='Student')
+    new_user = User(first_name='Andrea', last_name='Ripa', email='testnewuser@test.1',
+                    password=generate_password_hash("Italy123"),
+                    account_type='Student')
     db.session.add(new_user)
     db.session.commit()
     if current_user:
@@ -171,7 +211,7 @@ def test_au08_password_reset(test_client, db):
     assert b'administrator' in login_response.data
 
 
-def test_au09_change_email(test_client, db):
+def test_au07_change_email(test_client, db):
     """
     GIVEN a user is registered
     WHEN they submit a profile change form to modify their email
@@ -188,7 +228,7 @@ def test_au09_change_email(test_client, db):
     assert b'Log out' in response.data
 
 
-def test_au10_logout(test_client, db):
+def test_au08_logout(test_client, db):
     """
     GIVEN a user is logged in
     WHEN they submit a logout request
@@ -200,5 +240,3 @@ def test_au10_logout(test_client, db):
     test_client.get('/logout')
 
     assert not current_user.is_authenticated
-
-

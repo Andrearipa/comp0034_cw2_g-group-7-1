@@ -3,27 +3,52 @@ This file is used to test the different components linked to the blog blueprint,
 together properly. Especially the tests focus on the functionality that the user will be using and the required
 interactions. These are mainly two and are with the flask application routes and the database.
 """
+
 from flask_login import current_user
 from startingbusiness_app.models import Blog
 
 
 def login(client, email, password):
-    """Provides login to be used in tests"""
+    """
+    Provides login to be used in tests.
+
+    :param client: test_client
+    :param email: user email
+    :param password: user password
+    :return: http response
+    """
     return client.post('/login', data=dict(email=email, password=password), follow_redirects=True)
 
 
 def blog(client):
-    """Provides blog to be used in tests"""
+    """
+    Provides link to blog for testing.
+
+    :param client: test_client
+    :return: route page
+    """
     return client.get('/blog')
 
 
 def create_post_access(client):
-    """Provides create post to be used in tests"""
+    """
+    Provides link to get to new post page.
+
+    :param client: test_client
+    :return: new post route page
+    """
     return client.get('/blog/post/new')
 
 
 def create_post_publish(client, title, content):
-    """Provides create post to be used in tests"""
+    """
+    Provides new post to vbe published for logged in user.
+
+    :param client: test_client
+    :param title: post title
+    :param content: post content
+    :return: http response
+    """
     return client.post('/blog/post/new', data=dict(title=title, content=content), follow_redirects=True)
 
 
@@ -149,7 +174,7 @@ def test_bl09_update_post(test_client, db):
                                                    content='Interesting business score for Germany in 2017'),
                                          follow_redirects=True)
     assert response_post_upd.status_code == 200
-    assert b'Your post has been updated successfully' in response_post_upd.data, 'No flash message displayed after update'
+    assert b'Your post has been updated successfully' in response_post_upd.data, 'No flash message displayed'
     assert b'Germany' in response_post_upd.data, 'Blog is not displayed updated'
     test_client.get('/logout')
 
@@ -171,4 +196,3 @@ def test_bl10_delete_post(test_client, db):
     assert b'Your post has been deleted!' in response_post_del.data
     assert num_of_post_pre_del - num_of_post_post_del == 1
     test_client.get('/logout')
-

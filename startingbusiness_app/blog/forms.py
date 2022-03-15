@@ -1,3 +1,8 @@
+"""
+This file is used for the definitions of forms used in the blog blueprint. It comprises the forms for the blog page,
+create a new post and modify/delete it.
+"""
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length
