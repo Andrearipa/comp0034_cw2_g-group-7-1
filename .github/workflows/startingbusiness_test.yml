@@ -33,9 +33,9 @@ jobs:
 #        pip install coverage
 #        coverage run -m --source=startingbusiness_app unittest discover tests_unittest
 #        coverage report
-#    - name: Test with pytest (excluding Selenium)
-#      run: |
-#        pytest --verbose --cov=startingbusiness_app --ignore=tests_unittest/ --ignore=tests/test_my_app_browser.py
+    - name: Test with pytest (excluding Selenium)
+      run: |
+        pytest --verbose --cov=startingbusiness_app 
 #    - name: Test with pytest (Selenium)
 #      working-directory: my_app
 #      run: |    
