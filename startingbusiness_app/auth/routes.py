@@ -37,13 +37,13 @@ def signup():
     if request.method == 'POST' and form.validate_on_submit():
         filename = "default.jpg"
         if 'photo' in request.files:
-            if request.files['photo'].filename!= '':
+            if request.files['photo'].filename != '':
                 request.files['photo'].filename = generate_password_hash(request.files['photo'].filename) + '.jpg'
                 filename = photos.save(request.files['photo'])
                 image_path = Path(__file__).parent
                 image_path2 = image_path.parent.joinpath("static/profile_images")
                 temp_image = Image.open(str(image_path2) + '/'+filename)
-                temp_image.thumbnail((400,400))
+                temp_image.thumbnail((400, 400))
                 temp_image.save(str(image_path2) + '/'+filename)
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data,
                     account_type=form.account_type.data, profile_image=filename)
