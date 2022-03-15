@@ -30,7 +30,8 @@ def db(app):
                       password=generate_password_hash('Hello456'), account_type='Professional')
         user_3 = User(first_name='Danielle', last_name='Konig', email='danielle_konig@123.co.uk',
                       password=generate_password_hash('Canada789'),
-                      account_type='Entrepreneur')
+                      account_type='Entrepreneur',
+                      profile_image='startingbusiness_app/static/profile_images/Default.jpg')
 
         user_1.posts.append(Blog(title='Test Post 1', content='Content for test post 1 by user 1'))
         user_2.posts.append(Blog(title='Test Post 2', content='Content for test post 2 by user 2'))
@@ -58,3 +59,4 @@ def session(db, app):
         sess.remove()
         transaction.rollback()
         connection.close()
+

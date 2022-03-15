@@ -7,7 +7,7 @@
             <form method=post action="{{ url_for('auth.login') }}">
                 {{ form.csrf_token }}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-3"><b> Log in ! </b> </legend>
+                    <legend class="border-bottom mb-3"><b> Log in! </b> </legend>
                     <div class="form-group mb-2">
                         {{ form.email.label(class="form-control-label") }}
                         {% if form.email.errors %}
