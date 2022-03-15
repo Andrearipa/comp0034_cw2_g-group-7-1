@@ -30,19 +30,10 @@ def db(app):
         user_3 = User(first_name='Danielle', last_name='Konig', email='danielle_konig@123.co.uk', password=generate_password_hash('Canada789'),
                       account_type='Entrepreneur')
 
-
         user_1.posts.append(Blog(title='Test Post 1', content='Content for test post 1 by user 1'))
-        user_2.posts.append(Blog(title='Test Post 2', content='Content for test post 2 by user 1'))
-        user_3.posts.append(Blog(title='Test Post 3', content='Hello pizza is good'))
-        """
-        post_1 = Blog(title='Test Post 1', content='Content for test post 1 by user 1', author='kate.vanelli@gmail.com')
-        post_2 = Blog(title='Test Post 2', content='Content for test post 2 by user 1')
-        post_3 = Blog(title='Test Post 3', content='Hello pizza is good')
+        user_2.posts.append(Blog(title='Test Post 2', content='Content for test post 2 by user 2'))
+        user_2.posts.append(Blog(title='Test Post 3', content='Interesting business score for italy in 2017'))
 
-        database.session.add(post_1)
-        database.session.add(post_2)
-        database.session.add(post_3)
-        """
         database.session.add(user_1)
         database.session.add(user_2)
         database.session.add(user_3)
