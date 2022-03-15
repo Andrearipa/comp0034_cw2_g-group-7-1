@@ -66,3 +66,5 @@ Have a test for complete interaction of user with webpage
 # References
 if we have been following a general guideline, insert the reference here
 if we have copied code specifically, we can reference it within the py file itself -> to be done for the blog
+
+--ignore=tests/unit --ignore=tests/component
