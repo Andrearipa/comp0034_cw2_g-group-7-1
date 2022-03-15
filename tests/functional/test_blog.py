@@ -16,17 +16,17 @@ def blog(client):
     return client.get('/blog')
 
 
-def test_user_login_success(test_client):
+def test_user_login_success(test_client, db):
     """
     GIVEN a user with a valid username and password
     WHEN the user logs in
     THEN a HTTP 200 code is received
     """
-    response = login(test_client, email='kate.vanelli@gmail.com', password='c')
+    response = login(test_client, email='kate.vanelli@gmail.com', password='Hello456')
     assert b'administrator' in response.data
 
 
-def test_blog(test_client):
+def test_blog(test_client, db):
     """
     GIVEN a user with a valid username and password
     WHEN the user logs in
