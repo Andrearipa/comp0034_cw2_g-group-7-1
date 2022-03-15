@@ -32,6 +32,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     ENV = 'testing'
     TESTING = True
-    SQLALCHEMY_ECHO = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(Path(__file__).parent.joinpath('testing.sqlite'))
+    SQLALCHEMY_ECHO = False
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + str(Path(__file__).parent.joinpath('test_app.sqlite'))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     WTF_CSRF_ENABLED = False
