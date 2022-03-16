@@ -15,4 +15,16 @@ class TestAppBrowser:
         """ Check the app is running"""
         sleep(5)
         self.driver.get('http://127.0.0.1:5000/')
-        assert self.driver.title == 'Home'
+        assert self.driver.title == 'Starting a Business'
+
+    def test_dash_works_bubble_chart(self,app):
+        sleep(5)
+        self.driver.get('http://127.0.0.1:5000/bubble_chart')
+        sleep(10)
+        assert self.driver.title == 'Bubble Chart'
+
+    def test_dash_works_choropleth_map(self,app):
+        sleep(5)
+        self.driver.get('http://127.0.0.1:5000/choropleth_map')
+        sleep(10)
+        assert self.driver.title == 'Choropleth Map'
