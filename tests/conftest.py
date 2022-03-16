@@ -30,7 +30,7 @@ def run_app(app):
     """
     Fixture to run the Flask app for Selenium browser tests
     """
-    multiprocessing.set_start_method("spawn")  # Needed in Python 3.8 and later
+    multiprocessing.set_start_method("fork")  # Needed in Python 3.8 and later
     process = multiprocessing.Process(target=app.run, args=())
     process.start()
     yield process
