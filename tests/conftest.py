@@ -6,7 +6,7 @@ import multiprocessing
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium import webdriver
 
-driver = webdriver.Chrome(executable_path= r'D:\Python\comp0034_cw2_g-group-7-1-2\chromedriver.exe')
+
 @pytest.fixture(scope='class')
 def chrome_driver(request):
     """ Selenium webdriver with options to support running in GitHub actions
