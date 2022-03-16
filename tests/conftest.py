@@ -2,6 +2,39 @@ import pytest
 from startingbusiness_app import create_app, config
 from startingbusiness_app.models import db as database, User, Blog
 from werkzeug.security import generate_password_hash
+import multiprocessing
+from selenium.webdriver import Chrome, ChromeOptions
+from selenium import webdriver
+
+driver = webdriver.Chrome(executable_path= r'D:\Python\comp0034_cw2_g-group-7-1-2\chromedriver.exe')
+@pytest.fixture(scope='class')
+def chrome_driver(request):
+    """ Selenium webdriver with options to support running in GitHub actions
+    Note:
+        For CI: `headless` and `disable-gpu` not commented out
+        For running on your computer: `headless` and `disable-gpu` to be commented out
+    """
+    options = ChromeOptions()
+    options.add_argument("--headless")  # use for GitHub Actions CI
+    options.add_argument('--disable-gpu') # use for GitHub Actions CI
+    options.add_argument("--window-size=1920,1080")
+    #chrome_driver = webdriver.Chrome(executable_path= r'D:\Python\comp0034_cw2_g-group-7-1-2\chromedriver.exe')
+    chrome_driver = Chrome(options=options)
+    request.cls.driver = chrome_driver
+    yield
+    chrome_driver.close()
+
+
+@pytest.fixture(scope='class')
+def run_app(app):
+    """
+    Fixture to run the Flask app for Selenium browser tests
+    """
+    multiprocessing.set_start_method("spawn")  # Needed in Python 3.8 and later
+    process = multiprocessing.Process(target=app.run, args=())
+    process.start()
+    yield process
+    process.terminate()
 
 
 @pytest.fixture(scope='session')
