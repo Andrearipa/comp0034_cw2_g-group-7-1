@@ -28,3 +28,55 @@ class TestAppBrowser:
         self.driver.get('http://127.0.0.1:5000/choropleth_map')
         sleep(10)
         assert self.driver.title == 'Choropleth Map'
+
+    def test_full_experience(self, app):
+        sleep(5)
+        self.driver.get('http://127.0.0.1:5000/')
+        self.driver.implicitly_wait(5)
+        self.driver.find_element(By.ID, "nav-signup").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.title == "Sign Up"
+
+        # Creating example user inputs
+
+        first_name = "John"
+        first_name2 = "Jack"
+        last_name = "Doe"
+        email = "random_email@email.com"
+        password = "password123"
+        password_repeat = "password123"
+        account_type = "Professional"
+
+        self.driver.find_element(By.ID, "first_name").send_keys(first_name)
+        self.driver.find_element(By.ID, "last_name").send_keys(last_name)
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "password_repeat").send_keys(password_repeat)
+        self.driver.find_element(By.ID, "account_type").send_keys(account_type)
+        self.driver.find_element(By.ID, "submit_reg").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.title == 'Starting a Business'
+        self.driver.find_element(By.ID, "nav-login").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.title == "Login"
+        self.driver.find_element(By.ID, "email").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "submit_login").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.title == 'Starting a Business'
+        self.driver.find_element(By.ID, "nav-profile").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.find_element(By.ID, "profile-name") == first_name + last_name
+        self.driver.find_element(By.ID, "first_name").send_keys(first_name2)
+        self.driver.find_element(By.ID, "submit_reg").click()
+        self.driver.implicitly_wait(5)
+        assert self.driver.find_element(By.ID, "profile-name") == first_name2 + last_name
+
+
+
+
+
+
+
+
+
