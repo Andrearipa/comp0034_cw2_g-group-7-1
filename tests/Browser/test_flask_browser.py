@@ -56,7 +56,7 @@ class TestAppBrowser:
         self.driver.find_element(By.ID, "submit_reg").click()
         self.driver.implicitly_wait(5)
         assert self.driver.title == 'Starting a Business'
-        self.driver.find_element(By.ID, "nav-login").click()
+        self.driver.find_element(By.ID, "nav-log_in").click()
         self.driver.implicitly_wait(5)
         assert self.driver.title == "Login"
         self.driver.find_element(By.ID, "email").send_keys(email)
