@@ -44,7 +44,6 @@ def blog():
     return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
 
 
-
 def send_post_email(user, post_email):
     message = Message('Starting a Business App - New Post', recipients=[user.email])
     message.body = f'''Hello {user.first_name},

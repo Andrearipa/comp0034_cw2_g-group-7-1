@@ -3,8 +3,6 @@ This file is used to test the different components linked to the main blueprint,
 together properly. Especially the tests focus on the functionality that the user will be using and the required
 interactions. These are mainly two and are with the flask application routes and the database.
 """
-import pytest
-from flask_login import current_user
 
 
 def login(client, email, password):
@@ -79,9 +77,3 @@ def test_ma07_login_page_content(test_client):
     """
     response = test_client.get('/login')
     assert b'<b> Log in! </b>' in response.data, 'Incorrect Page Displayed'
-
-
-
-
-
-
