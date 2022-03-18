@@ -66,7 +66,7 @@ class TestAppBrowser:
         self.driver.find_element(By.ID, "nav-profile").click()
         self.driver.implicitly_wait(5)
         assert self.driver.find_element(By.ID, "profile-email").text == email
-        assert self.driver.find_element(By.ID, "profile-name").text == " "+ first_name+" "+ last_name
+        assert self.driver.find_element(By.ID, "profile-name").text ==  first_name+" "+ last_name
 
 
 
