@@ -40,10 +40,8 @@ class TestAppBrowser:
         # Creating example user inputs
 
         first_name = "John"
-        first_name2 = "Johnny"
         last_name = "Doe"
         email = "random_email@email.com"
-        email2 = "random_email2@email.com"
         password = "password123"
         password_repeat = "password123"
         account_type = "Professional"
@@ -68,16 +66,9 @@ class TestAppBrowser:
         self.driver.find_element(By.ID, "nav-profile").click()
         self.driver.implicitly_wait(5)
         assert self.driver.find_element(By.ID, "profile-email").text == email
-        self.driver.find_element(By.ID, "email").send_keys(email2)
-        #self.driver.find_element(By.ID, "first_name").send_keys(first_name2)
-        self.driver.find_element(By.ID, "submit_reg").click()
-        self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-home").click()
-        self.driver.implicitly_wait(5)
-        self.driver.find_element(By.ID, "nav-profile").click()
-        self.driver.implicitly_wait(5)
-        assert self.driver.find_element(By.ID, "profile-email").text == email2
-        #assert self.driver.find_element(By.ID, "profile-name").text == "" + first_name2 + ""+ last_name
+        assert self.driver.find_element(By.ID, "profile-name").text == ""+ first_name+""+ last_name
+
+
 
 
 
