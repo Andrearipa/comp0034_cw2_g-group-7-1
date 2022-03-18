@@ -1,10 +1,9 @@
+import multiprocessing
 import pytest
+from selenium.webdriver import Chrome, ChromeOptions
+from werkzeug.security import generate_password_hash
 from startingbusiness_app import create_app, config
 from startingbusiness_app.models import db as database, User, Blog
-from werkzeug.security import generate_password_hash
-import multiprocessing
-from selenium.webdriver import Chrome, ChromeOptions
-from selenium import webdriver
 
 
 @pytest.fixture(scope='class')
@@ -16,9 +15,8 @@ def chrome_driver(request):
     """
     options = ChromeOptions()
     options.add_argument("--headless")  # use for GitHub Actions CI
-    options.add_argument('--disable-gpu') # use for GitHub Actions CI
+    options.add_argument('--disable-gpu')  # use for GitHub Actions CI
     options.add_argument("--window-size=1920,1080")
-    #chrome_driver = webdriver.Chrome(executable_path= r'D:\Python\comp0034_cw2_g-group-7-1-2\chromedriver.exe')
     chrome_driver = Chrome(options=options)
     request.cls.driver = chrome_driver
     yield

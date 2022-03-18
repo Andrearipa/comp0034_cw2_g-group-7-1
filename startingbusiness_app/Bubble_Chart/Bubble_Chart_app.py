@@ -8,8 +8,8 @@ is instead created using app callbacks with dash dependencies (input, output).
 The code should return a web page divided in four rows:
 - a top row containing Gender and Region selectors
 - a middle row with the bubble chart for the selected combination of gender and region and an option to animate by year
-(NOTE: if both men and women are selected, this row will actually contain two columns, with one graph per column representing
-each of the gender groups)
+(NOTE: if both men and women are selected, this row will actually contain two columns, with one graph per column
+representing each of the gender groups)
 - a row containing a second title and a year selection for the data table
 - a row containing the data [actual value, not score] for the chosen gender, region, and year.
 
@@ -40,12 +40,14 @@ region_bubblechart_list = df_general['Region'].unique()
 year_bubblechart_list = df_general['Year'].unique()
 
 # -----------------------------------------------Navigation----------------------------------------------------------- #
+
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Profile", href="/profile", external_link=True)),
         dbc.NavItem(dbc.NavLink("Bubble Chart", href="/bubble_chart", external_link=True)),
         dbc.NavItem(dbc.NavLink("Choropleth Map", href="/choropleth_map", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Blog", href="/blog", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Profile", href="/profile", external_link=True)),
         dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
         dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),
     ],
@@ -122,10 +124,10 @@ layout2 = app.layout
 # in the different checklists. The different charts have an associated pandas dataframe.
 def init_callbacks(dash_app):
     @dash_app.callback(
-    [Output("values_table", "figure")],
-    [Output("bubble_chart_col", "children")],
-    [Input("gender", "value")], [Input("region", "value")],
-    [Input("year", "value")])
+        [Output("values_table", "figure")],
+        [Output("bubble_chart_col", "children")],
+        [Input("gender", "value")], [Input("region", "value")],
+        [Input("year", "value")])
     def update_chart(gender, region, year):
         """
             Function returns the figure for both the bubble chart and table based on the inputs captured by using the
@@ -139,8 +141,8 @@ def init_callbacks(dash_app):
                 table with the true scores for the selected region
             """
 
-        # Based on whether the selected gender is Men, Women, both, or neither, set the headers of the bubble chart and of
-        # the table
+        # Based on whether the selected gender is Men, Women, both, or neither, set the headers of the bubble chart and
+        # of the table
         if gender == [1]:  # Gender is Women
             x_header_fig = 'Time - Women (days)- Score'
             y_header_fig = 'Procedures required - Women (number) - Score'
@@ -169,9 +171,9 @@ def init_callbacks(dash_app):
             y_header_tab = 'Procedures required (Average)'
             z_header_tab = 'Cost (Average)'
 
-        # Based on which region (or regions) has been selected in the checklist, select the relevant rows in the dataframe
-        # (i.e. those whose 'region' value matches the one selected) and keep those rows. For all the unselected regions,
-        # calculate scores as average of the scores for that region
+        # Based on which region (or regions) has been selected in the checklist, select the relevant rows in the
+        # dataframe (i.e. those whose 'region' value matches the one selected) and keep those rows. For all the
+        # unselected regions, calculate scores as average of the scores for that region
         if not region:
             df = df_by_region
             df_tab = df
@@ -319,8 +321,6 @@ def init_callbacks(dash_app):
         return tab, children_bc
 
 
-
-
 def init_dashboard(flask_app):
     dash_app = dash.Dash(server=flask_app, routes_pathname_prefix='/bubble_chart/',
                          external_stylesheets=[dbc.themes.SANDSTONE])
@@ -328,6 +328,7 @@ def init_dashboard(flask_app):
     dash_app.title = "Bubble Chart"
     init_callbacks(dash_app)
     return dash_app.server
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

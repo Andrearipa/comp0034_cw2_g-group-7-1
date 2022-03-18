@@ -51,9 +51,10 @@ income_dropdown_list = ['All', 'Low income', 'Upper middle income', 'Lower middl
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("Home", href="/", external_link=True)),
-        dbc.NavItem(dbc.NavLink("Profile", href="/profile", external_link=True)),
         dbc.NavItem(dbc.NavLink("Bubble Chart", href="/bubble_chart", external_link=True)),
         dbc.NavItem(dbc.NavLink("Choropleth Map", href="/choropleth_map", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Blog", href="/blog", external_link=True)),
+        dbc.NavItem(dbc.NavLink("Profile", href="/profile", external_link=True)),
         dbc.NavItem(dbc.NavLink("Sign Up", href="/signup", external_link=True)),
         dbc.NavItem(dbc.NavLink("Log In", href="/login", external_link=True)),
     ],
@@ -161,8 +162,8 @@ def init_callbacks(dash_app):
 
         # -------------------------------------------Choropleth Map--------------------------------------------------- #
 
-        # Modifying the dataframe to generate choropleth map by taking data for only the selected regions. Setting fitbound
-        # value variable to locations to automatically zoom in selected regions in the map
+        # Modifying the dataframe to generate choropleth map by taking data for only the selected regions. Setting
+        # fitbound value variable to locations to automatically zoom in selected regions in the map
         if 'World' not in region:
             df_choropleth = df_cm_bc.loc[df_cm_bc['Region'].isin(region)]
             fitbound_value_cm = 'locations'
@@ -205,9 +206,9 @@ def init_callbacks(dash_app):
         df_barchart = df_barchart[df_barchart[str(indicator)].notna()]
         df_barchart.sort_values(by=[str(indicator)], inplace=True, ascending=True)
 
-        # Creating a list in order to change color of bar chart based on the position. List can take different dimensions
-        # due to number of countries available for selected parameters. Thus creating a list for the top n positions with
-        # n between 0 and 10
+        # Creating a list in order to change color of bar chart based on the position. List can take different
+        # dimensions due to number of countries available for selected parameters. Thus creating a list for the top n
+        # positions with n between 0 and 10
         if df_barchart[str(indicator)].count() in range(3, 11):
             list_pos_color = ['Runners up' for i in range(1, df_barchart[str(indicator)].count() - 2)]
             list_pos_color.extend(('Third', 'Second', 'First'))
@@ -220,8 +221,8 @@ def init_callbacks(dash_app):
         else:
             list_pos_color = []
 
-        # Generating bar chart figure specifying colours for first, second, third and runners up positions and adding name
-        # of country over the bar
+        # Generating bar chart figure specifying colours for first, second, third and runners up positions and adding
+        # name of country over the bar
         fig_bc = px.bar(df_barchart,
                         x=indicator,
                         y='Country Name',

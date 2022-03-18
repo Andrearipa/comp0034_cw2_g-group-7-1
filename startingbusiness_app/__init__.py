@@ -47,7 +47,7 @@ def create_app(config_class_name):
     mail.init_app(app)
 
     with app.app_context():
-        from app_cm.Choropleth_app import init_dashboard
+        from startingbusiness_app.app_cm.Choropleth_app import init_dashboard
         app = init_dashboard(app)
 
     with app.app_context():
@@ -55,7 +55,7 @@ def create_app(config_class_name):
         db.create_all()
 
     with app.app_context():
-        from Bubble_Chart.Bubble_Chart_app import init_dashboard
+        from startingbusiness_app.Bubble_Chart.Bubble_Chart_app import init_dashboard
         app = init_dashboard(app)
 
     return app

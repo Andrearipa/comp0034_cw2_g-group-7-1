@@ -4,32 +4,52 @@ import pytest
 from selenium.webdriver.common.by import By
 
 
-
 @pytest.mark.usefixtures('chrome_driver', 'run_app')
 class TestAppBrowser:
-    """Class containing Selenium tests.
+    """ Class containing Selenium tests.
     This does not need to be a python class, it is written this way to give you an example of a test class.
     """
 
     def test_app_is_running(self, app):
-        """ Check the app is running"""
+        """
+        GIVEN: that the app is running
+        WHEN: the home page title is displayed
+        THEN: it should be starting a business
+        """
         sleep(5)
         self.driver.get('http://127.0.0.1:5000/')
         assert self.driver.title == 'Starting a Business'
 
-    def test_dash_works_bubble_chart(self,app):
+    def test_dash_works_bubble_chart(self, app):
+        """
+        GIVEN: that the app is running
+        WHEN: the bubble chart page title is displayed
+        THEN: it should be bubble chart
+        """
         sleep(5)
         self.driver.get('http://127.0.0.1:5000/bubble_chart')
         sleep(10)
         assert self.driver.title == 'Bubble Chart'
 
-    def test_dash_works_choropleth_map(self,app):
+    def test_dash_works_choropleth_map(self, app):
+        """
+        GIVEN: that the app is running
+        WHEN: the choropleth page title is displayed
+        THEN: it should be choropleth
+        """
         sleep(5)
         self.driver.get('http://127.0.0.1:5000/choropleth_map')
         sleep(10)
         assert self.driver.title == 'Choropleth Map'
 
     def test_full_experience(self, app):
+        """
+        Test simulates the interaction of a new user on the page: home -> sign-up -> home -> log in -> profile.
+
+        GIVEN: that the app is running
+        WHEN: the user interacts with it
+        THEN: it working regularly
+        """
         sleep(5)
         self.driver.get('http://127.0.0.1:5000/')
         self.driver.implicitly_wait(5)
@@ -66,16 +86,4 @@ class TestAppBrowser:
         self.driver.find_element(By.ID, "nav-profile").click()
         self.driver.implicitly_wait(5)
         assert self.driver.find_element(By.ID, "profile-email").text == email
-        assert self.driver.find_element(By.ID, "profile-name").text ==  first_name+" "+ last_name
-
-
-
-
-
-
-
-
-
-
-
-
+        assert self.driver.find_element(By.ID, "profile-name").text == first_name + " " + last_name
