@@ -4,13 +4,16 @@ create a new post and modify/delete it.
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, Length
 
 
 class BlogPage(FlaskForm):
-    add_post_button = SubmitField('Write a new post')
+    # add_post_button = SubmitField('Write a new post')
     filter_keyword = StringField('Keyword search')
+    sort_by = RadioField('Sort posts by:', choices=[('date_new', 'Date - Newest'),
+                                                    ('date_old', 'Date - Oldest'),
+                                                    ('title', 'Title')], default='date_new')
 
 
 class CreateNewPost(FlaskForm):
