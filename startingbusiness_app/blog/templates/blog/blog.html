@@ -8,16 +8,29 @@
     {# Version using _formhelpers see: https://flask.palletsprojects.com/en/2.0.x/patterns/wtforms/#forms-in-templates #}
     <div class="col col-md-2" style="float:left; align-content: start">
         <div class="align-content-start">
+            <div>
+                <a class="btn btn-primary btn-lg mb-3" href="{{ url_for('blog.new_post') }}">Write a New Post</a>
+            </div>
             <form method=post action="{{ url_for('blog.blog') }}" autocomplete="off">
                 {{ form.csrf_token }}
-                <div class="form-group mb-lg-4">
-                    {{ form.add_post_button(class="btn btn-outline-primary btn-light btn-lg")}}
-                </div>
-                <div class="form-group mb-lg-2">
+                <div class="form-group mb-3">
                     {{ form.filter_keyword.label(class="form-control-label") }}
                     {{ form.filter_keyword(class="form-control") }}
                     <small class="text-sm-end text-muted">Press Enter to submit your word search</small>
                 </div>
+                <div class="form-group mb-3">
+                    <div class="row">
+                        {{ form.sort_by.label(class="form-control-label") }}
+                    </div>
+                    {% for subfield in form.sort_by %}
+                        {{ subfield }} {{ subfield.label }}
+                        <div class="row"></div>
+                    {% endfor %}
+                    <div class="input-group mb-3">
+                    <input type="submit">
+                    </div>
+                </div>
+                <div class="text-sm text-muted">Click on the name of the user to see all the posts by that author</div>
             </form>
         </div>
     </div>

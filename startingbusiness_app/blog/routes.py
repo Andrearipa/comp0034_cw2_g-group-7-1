@@ -19,16 +19,30 @@ def blog():
     posts = Blog.query.order_by(Blog.date_posted.desc()).all()
     blog_form = BlogPage()
     word = blog_form.filter_keyword.data
+    sort = blog_form.sort_by.data
     if blog_form.validate_on_submit():
-        if word:
+        if sort == 'date_new':
             posts = Blog.query.filter(or_(Blog.title.contains(word), Blog.content.contains(word))).order_by(
                 Blog.date_posted.desc())
-            blog_form.filter_keyword.data = ""
-            flash(f"Posts filtered by '{word}'", "info")
-            return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
-        elif blog_form.add_post_button:
-            return redirect(url_for('blog.new_post'))
+            sort_label = 'Date Added - Newest'
+        elif sort == 'date_old':
+            posts = Blog.query.filter(or_(Blog.title.contains(word), Blog.content.contains(word))).order_by(
+                Blog.date_posted.asc())
+            sort_label = 'Date Added - Oldest'
+        elif sort == 'title':
+            posts = Blog.query.filter(or_(Blog.title.contains(word), Blog.content.contains(word))).order_by(
+                Blog.title.asc())
+            sort_label = 'Title'
+        blog_form.filter_keyword.data = ""
+        blog_form.sort_by.data = "date_new"
+        if sort and not word:
+            flash(f"Posts filtered by {sort_label}", "info")
+        else:
+            flash(f"Posts filtered by {sort_label} and {word}'", "info")
+        return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
+
     return render_template('blog/blog.html', form=blog_form, posts=posts, title='Blog')
+
 
 
 def send_post_email(user, post_email):
