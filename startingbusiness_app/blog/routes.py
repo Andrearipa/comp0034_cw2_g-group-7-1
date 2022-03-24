@@ -1,5 +1,9 @@
 """
 This file was developed to establish the routes for the blog blueprint.
+
+Part of the overall structure was based on the tutorial videos of Corey Schafer for 'flask tutorial'
+(https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH), even though it was modified to fit the
+purpose of the web app.
 """
 
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort

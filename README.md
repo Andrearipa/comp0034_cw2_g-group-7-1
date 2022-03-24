@@ -61,4 +61,20 @@ email with a unique link to reset it.
 ### Dash Integration:
 
 The dashboard developed during cw-1 has been integrated using the navigation bar. This has allowed the integration of
-multiple pages of the originally developed dash app, resulting in a multi-page dashboard available to the user. 
+multiple pages of the originally developed dash app, resulting in a multi-page dashboard available to the user.
+
+## Testing
+
+Please note that the testing run through the terminal will not work on Windows machine for the browser test only. This
+is due to the 'fork' argument for multiprocessing not working on Windows. 'Spawn' can be used instead as an argument,
+but it will not run on GitHub.
+
+## References
+
+Some functionalities of the web app were based on the tutorial videos of Corey Schafer for 'flask tutorial'
+[link](https://www.youtube.com/playlist?list=PL-osiE80TeTs4UjLw5MM6OjgkjFeUxCYH). The functionalities that are presented
+in the tutorial were used as inspiration, but they were rewritten to match the web application purpose and needs. The
+GitHub code of the tutorial can be found at the following 
+[link](https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog). The main feature that was based on 
+the tutorial was the overall structure of the blog even though it was adapted, modified to have more functionalities and 
+also the style and templates were changed. 
