@@ -2,6 +2,8 @@
 
 ## Introduction
 
+[Explanatory Video Link](https://youtu.be/55oP3qd0A2k)
+
 The team decided to develop a web app to integrate the dashboard with more functionalities. The functionalities
 developed are based on the requirements highlighted in the first part of the project (Term 1). The functionalities taken
 in consideration were also classified based on the importance. This ranking was used to prioritize the features to be
