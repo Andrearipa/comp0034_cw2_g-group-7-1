@@ -2,6 +2,7 @@
 
 ## Introduction
 [Repository-Link](https://github.com/ucl-comp0035/comp0034_cw2_g-group-7-1)
+
 [Explanatory Video Link](https://youtu.be/55oP3qd0A2k)
 
 The team decided to develop a web app to integrate the dashboard with more functionalities. The functionalities
